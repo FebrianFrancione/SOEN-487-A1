@@ -1,5 +1,7 @@
 package com.example.AlbumAndArtists;
 
+import core.Album;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
