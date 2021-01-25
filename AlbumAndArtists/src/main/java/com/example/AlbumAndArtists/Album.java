@@ -15,6 +15,7 @@ public class Album {
         this.artist = artist;
     }
 
+
     public String toString() {
         return "Album{" +
                 "ISRC='" + ISRC + '\'' +
