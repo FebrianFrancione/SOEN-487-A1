@@ -6,6 +6,7 @@ Album Requests:
 
 POST: http://localhost:8080/core/album/{ISRC}/{title}/{description}/{year}/{artist}
 GET: http://localhost:8080/core/album/{ISRC}/{title}
-GET ALL ALBUMS: http://localhost:8080/core/album/all
+
+GET ALL ALBUMS by ISRC and Title: http://localhost:8080/core/album/list
 DELETE: http://localhost:8080/core/album/{ISRC}/{title}
 PUT: http://localhost:8080/core/album/{ISRC}/{title}/{description}/{year}/{artist}
