@@ -3,24 +3,46 @@ package com.example.AlbumAndArtists;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Path("album")
 public class AlbumRest {
     private static ArrayList<Album> albums = new ArrayList<>();
 
+    //getting album by ISRC and title
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("{title}")
-    public String getAlbum(@PathParam("title") String title) {
-        Album album = albums.stream().filter(album1 -> album1.getTitle().equals(title)).findFirst().orElse(null);
+    @Path("/test")
+    public String getAlbum() {
+        return albums.toString();
+    }
 
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("{ISRC}/{title}")
+    public String getAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title) {
+        Album album = albums.stream().filter(album1 -> album1.getTitle().equals(title) && album1.getISRC().equals(ISRC)).findFirst().orElse(null);
         if (album != null) {
             return album.toString();
         }else{
             return "Album not found!";
         }
     }
+
+//    @GET
+//    @Produces(MediaType.TEXT_PLAIN)
+//    public List<Album> findAlbum(@QueryParam("ISRC") String ISRC, @QueryParam("title") String title){
+//        Album album = albums.stream().filter(album1 -> album1.getTitle().equals(title) && album1.getISRC().equals(ISRC)).findFirst().orElse(null);
+//
+//        if (album != null) {
+//            return album.toString();
+//        }else {
+//            return "Album not found!";
+//
+//        }    }
+
+
 
     @POST
     @Path("{ISRC}/{title}/{description}/{year}/{artist}")
