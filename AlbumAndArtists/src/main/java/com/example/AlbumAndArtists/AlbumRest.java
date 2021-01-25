@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Path("album")
+@Path("/album")
 public class AlbumRest {
     private static ArrayList<Album> albums = new ArrayList<>();
 
@@ -17,6 +17,14 @@ public class AlbumRest {
     public String getAlbum() {
         return albums.toString();
     }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/test1")
+    public String test() {
+        return "hello";
+    }
+
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
