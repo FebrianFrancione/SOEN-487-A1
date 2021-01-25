@@ -17,15 +17,19 @@ public class AlbumRest {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/list")
     public Response getAlbum() {
-        arrayTest.add(new Album("ISRC","title", "description", 1, "artist"));
-        arrayTest.add(new Album("ISRC1","title1", "description1", 2, "artist1"));
-        arrayTest.add(new Album("ISRC2","title2", "description2", 3, "artist2"));
+
 //       Album album  = arrayTest.stream().findFirst().orElse(null);
         String message = "";
-        for(int i = 0; i < arrayTest.size(); i++){
-            message += " ISRC: " + arrayTest.get(i).getISRC() + ", Title: " + arrayTest.get(i).getTitle() + "\n";
+        if(!arrayTest.isEmpty()){
+            for(int i = 0; i < arrayTest.size(); i++){
+                message += " ISRC: " + arrayTest.get(i).getISRC() + ", Title: " + arrayTest.get(i).getTitle() + "\n";
+            }
+            return Response.status(Response.Status.OK).entity(message).build();
+        }else{
+            message = "Error! No albums no return!";
+            return Response.status(Response.Status.NOT_FOUND).entity(message).build();
         }
-        return Response.status(Response.Status.OK).entity(message).build();
+
 //        return arrayTest.size();
 //       if(!arrayTest.isEmpty()){
 //           arrayTest.stream().forEach(b-> System.out.println(b.getISRC() + "" + b.getTitle()));
