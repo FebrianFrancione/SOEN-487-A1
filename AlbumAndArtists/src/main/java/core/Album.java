@@ -1,4 +1,4 @@
-package com.example.AlbumAndArtists;
+package core;
 
 public class Album {
     private String ISRC;
@@ -16,7 +16,7 @@ public class Album {
     }
 
     public String toString() {
-        return "Album{" +
+        return "Album {" +
                 "ISRC='" + ISRC + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
