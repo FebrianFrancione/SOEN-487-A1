@@ -11,7 +11,7 @@ import java.net.URI;
 @ApplicationPath("/api")
 public class App {
 
-    public static final String BASE_URI = "http://localhost:8080/restaurant/";
+    public static final String BASE_URI = "http://localhost:8080/core/";
 
     /**
      * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
