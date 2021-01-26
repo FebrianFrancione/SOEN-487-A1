@@ -1,4 +1,4 @@
-package com.example.AlbumAndArtists;
+package services;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -21,7 +21,7 @@ public class App {
     public static HttpServer startServer() {
         // create a resource config that scans for JAX-RS resources and providers
         // in com.example.rest package
-        final ResourceConfig rc = new ResourceConfig().packages("com.example.AlbumAndArtists");
+        final ResourceConfig rc = new ResourceConfig().packages("services");
 
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI

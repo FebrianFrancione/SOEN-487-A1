@@ -1,7 +1,7 @@
-package com.example.AlbumAndArtists;
+package services;
 
+import core.Album;
 import org.glassfish.jersey.server.monitoring.ResponseMXBean;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -68,7 +68,7 @@ public class AlbumRest {
     @Produces({MediaType.TEXT_PLAIN})
     @Path("{ISRC}")
     public Response deleteAlbum(@PathParam("ISRC") String ISRC){
-        albums = albums.stream().filter(album -> album.getTitle() == ISRC).collect(Collectors.toCollection(ArrayList::new));
+        albums.removeIf(p -> (p.getISRC().equals(ISRC)));
         message = "Album: " + ISRC + " successfully deleted!";
         return Response.ok(message).build();
     }

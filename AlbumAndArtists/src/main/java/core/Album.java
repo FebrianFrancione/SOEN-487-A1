@@ -1,4 +1,4 @@
-package com.example.AlbumAndArtists;
+package core;
 
 public class Album {
     private String ISRC;
@@ -14,7 +14,6 @@ public class Album {
         this.year = year;
         this.artist = artist;
     }
-
 
     public String toString() {
         return "Album{" +
