@@ -68,7 +68,7 @@ public class AlbumRest {
     @Produces({MediaType.TEXT_PLAIN})
     @Path("{ISRC}")
     public Response deleteAlbum(@PathParam("ISRC") String ISRC){
-        albums = albums.stream().filter(album -> album.getTitle() == ISRC).collect(Collectors.toCollection(ArrayList::new));
+        albums.removeIf(p -> (p.getISRC().equals(ISRC)));
         message = "Album: " + ISRC + " successfully deleted!";
         return Response.ok(message).build();
     }

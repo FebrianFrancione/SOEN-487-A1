@@ -16,12 +16,12 @@ public class Album {
     }
 
     public String toString() {
-        return "Album {" +
-                "ISRC='" + ISRC + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", year=" + year +
-                ", artist='" + artist + '\'' +
+        return "Album{" +
+                "ISRC: '" + ISRC + '\'' +
+                ", title: '" + title + '\'' +
+                ", description: '" + description + '\'' +
+                ", release year: " + year +
+                ", artist: '" + artist + '\'' +
                 '}';
     }
 
