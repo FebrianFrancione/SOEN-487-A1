@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AlbumsManager {
-    private ArrayList<Album> albums;
+    private static ArrayList<Album> albums;
 
     public AlbumsManager() {
         this.albums = new ArrayList<>();
@@ -31,6 +31,19 @@ public class AlbumsManager {
     public Album getAlbum(String ISRC){
 
         Album album = albums.stream().filter(album1 -> album1.getISRC().equals(ISRC))
+                .findFirst()
+                .orElse(null);
+
+        return album;
+    }
+
+    public boolean hasAlbums(){
+        return albums.isEmpty();
+    }
+
+    public Album getAlbum(String ISRC, String title){
+
+        Album album = albums.stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title))
                 .findFirst()
                 .orElse(null);
 
