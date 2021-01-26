@@ -1,4 +1,4 @@
-package com.example.AlbumAndArtists;
+package services;
 
 import core.Album;
 import org.glassfish.jersey.server.monitoring.ResponseMXBean;
