@@ -17,7 +17,7 @@ public class AlbumRest {
 
     //getting album by ISRC and title
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces({MediaType.TEXT_PLAIN})
     @Path("/list")
     public Response getAlbum() {
 //        arrayTest.add(new Album("ISRC","title", "description", 1, "artist"));
@@ -49,26 +49,36 @@ public class AlbumRest {
         }
     }
 
-
     @POST
-    @Path("{ISRC}/{title}/{description}/{year}/{artist}")
-    public void createAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
-        Album newAlbum =new Album(ISRC, title, description, year, artist);
+    @Produces({MediaType.TEXT_PLAIN})
+    @Path("/create/{ISRC}/{title}/{description}/{year}/{artist}")
+    public Response createAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
+        if(ISRC == null || title == null || year == 0 || artist == null){
+            message = "A Form parameter is incorrect!";
+            return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
+        }
+        Album newAlbum  = new Album(ISRC, title, description, year, artist);
         albums.add(newAlbum);
+        message = "Album created!\nISRC: " + ISRC + "\nTitle: " + title + "\nDescription: " + description + "\nYear: " + year + "\nArtist: " + artist;
+        return Response.ok(message).build();
     }
 
-    //deelte uses ISRC so that other variables cna be modified
+    //delete uses ISRC
     @DELETE
     @Path("{ISRC}")
-    public void deleteAlbum(@PathParam("ISRC") String ISRC){
-        albums= albums.stream().filter(album -> album.getTitle() != ISRC).collect(Collectors.toCollection(ArrayList::new));
+    public Response deleteAlbum(@PathParam("ISRC") String ISRC){
+        albums = albums.stream().filter(album -> album.getTitle() == ISRC).collect(Collectors.toCollection(ArrayList::new));
+        message = "Album: " + ISRC + " successfully deleted!";
+        return Response.ok(message).build();
     }
 
     @PUT
     @Path("{ISRC}/{title}/{description}/{year}/{artist}")
-    public void modifyAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
+    public Response modifyAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
         deleteAlbum(ISRC);
+        message = "Album: " + ISRC + " modified!.\nNew Album: " + ISRC + "\nTitle: " + title + "\nArtist: " + artist + "\nYear: " + year + "\nDescription: " + description;
         createAlbum(ISRC, title, description, year, artist);
+        return Response.ok(message).build();
     }
 
 
