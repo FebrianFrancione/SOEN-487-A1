@@ -1,7 +1,7 @@
 package services;
 
 import core.Album;
-import org.glassfish.jersey.server.monitoring.ResponseMXBean;
+import implementation.AlbumsManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -11,25 +11,19 @@ import java.util.stream.Collectors;
 
 @Path("/album")
 public class AlbumRest {
-    private static ArrayList<Album> albums = new ArrayList<>();
-    public static ArrayList<Album> arrayTest = new ArrayList<>();
+    //private static ArrayList<Album> albums = new ArrayList<>();
     String message = "";
+    private static AlbumsManager albumsManager = new AlbumsManager();
 
-    //getting album by ISRC and title
     @GET
     @Produces({MediaType.TEXT_PLAIN})
     @Path("/list")
-    public Response getAlbum() {
-//        arrayTest.add(new Album("ISRC","title", "description", 1, "artist"));
-//        arrayTest.add(new Album("ISRC1","title1", "description1", 2, "artist1"));
-//        arrayTest.add(new Album("ISRC2","title2", "description2", 3, "artist2"));
+    public Response getAlbums() {
 
-        if(!albums.isEmpty()){
-            for(int i = 0; i < albums.size(); i++){
-                message += " ISRC: " + albums.get(i).getISRC() + ", Title: " + albums.get(i).getTitle() + "\n";
-            }
-            return Response.ok(message).build();
-        }else{
+        if(albumsManager.hasAlbums())
+            return Response.ok(albumsManager.getAllAlbums()).build();
+
+        else{
             message = "Error! No albums to return!";
 //            return Response.status(Response.Status.OK).entity(message).build();
             return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
@@ -40,7 +34,7 @@ public class AlbumRest {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("{ISRC}/{title}")
     public Response getAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title) {
-        Album album = albums.stream().filter(album1 -> album1.getTitle().equals(title) && album1.getISRC().equals(ISRC)).findFirst().orElse(null);
+        Album album = albumsManager.getAlbum(ISRC,title);
         if (album != null) {
             return Response.status(Response.Status.OK).entity(album.toString()).build();
         }else{
@@ -57,22 +51,28 @@ public class AlbumRest {
             message = "A Form parameter is incorrect!";
             return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
         }
-        Album newAlbum  = new Album(ISRC, title, description, year, artist);
-        albums.add(newAlbum);
-        message = "Album created!\nISRC: " + ISRC + "\nTitle: " + title + "\nDescription: " + description + "\nYear: " + year + "\nArtist: " + artist;
-        return Response.ok(message).build();
+        else{
+            Album album = albumsManager.createAlbum(ISRC, title, description, year, artist);
+            message = (album != null) ? "Album created!: \n" + album : " This ISRC already exists, please use a unique ISRC";
+            return Response.ok(message).build();
+        }
+
     }
 
-    //delete uses ISRC
     @DELETE
     @Produces({MediaType.TEXT_PLAIN})
     @Path("{ISRC}")
     public Response deleteAlbum(@PathParam("ISRC") String ISRC){
-        albums.removeIf(p -> (p.getISRC().equals(ISRC)));
-        message = "Album: " + ISRC + " successfully deleted!";
-        return Response.ok(message).build();
-    }
+        if(albumsManager.deleteAlbum(ISRC)){
+            message = "Album " + ISRC + " successfully deleted!";
+            return Response.ok(message).build();
+        }
 
+        else{
+            message = "Album " + ISRC + " was not found";
+            return Response.status(Response.Status.NOT_FOUND).entity(message).build();
+        }
+    }
 
     @PUT
     @Produces({MediaType.TEXT_PLAIN})
@@ -81,13 +81,17 @@ public class AlbumRest {
         if(ISRC == null || title == null || year == 0 || artist == null){
             message = "A Form parameter is incorrect!";
             return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
-        }else{
-            deleteAlbum(ISRC);
-            message = "Album: " + ISRC + " modified!.\nNew Album: " + ISRC + "\nTitle: " + title + "\nArtist: " + artist + "\nYear: " + year + "\nDescription: " + description;
-//            createAlbum(ISRC, title, description, year, artist);
-            Album newAlbum  = new Album(ISRC, title, description, year, artist);
-            albums.add(newAlbum);
-            return Response.ok(message).build();
+        }
+        else{
+            if(albumsManager.updateAlbum(ISRC, title, description, year, artist)){
+                message = "Album modified :\n" + albumsManager.getAlbum(ISRC);
+                return Response.ok(message).build();
+            }
+            else{
+                message = "Album " + ISRC + " could not be modified";
+                return Response.status(Response.Status.NOT_FOUND).entity(message).build();
+            }
+
         }
 
     }
