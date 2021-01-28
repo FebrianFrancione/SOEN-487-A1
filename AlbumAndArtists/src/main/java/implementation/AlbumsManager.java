@@ -2,7 +2,6 @@ package implementation;
 
 import core.Album;
 
-import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -11,17 +10,22 @@ public class AlbumsManager {
     private static ArrayList<Album> albums;
 
     public AlbumsManager() {
-        this.albums = new ArrayList<>();
+        albums = new ArrayList<>();
     }
 
     public Album createAlbum(String ISRC, String title, String description, int year, String artist){
-        Album newAlbum = new Album(ISRC, title, description, year, artist);
-        albums.add(newAlbum);
-        return newAlbum;
+        if(getAlbum(ISRC) == null){
+            Album newAlbum = new Album(ISRC, title, description, year, artist);
+            albums.add(newAlbum);
+            return newAlbum;
+        }
+
+        else
+            return null;
     }
 
-    public void deleteAlbum(String ISRC) {
-        albums.removeIf(p -> (p.getISRC().equals(ISRC)));
+    public boolean deleteAlbum(String ISRC) {
+        return albums.removeIf(p -> (p.getISRC().equals(ISRC)));
     }
 
     public String getAllAlbums(){
@@ -30,24 +34,20 @@ public class AlbumsManager {
 
     public Album getAlbum(String ISRC){
 
-        Album album = albums.stream().filter(album1 -> album1.getISRC().equals(ISRC))
+        return albums.stream().filter(album1 -> album1.getISRC().equals(ISRC))
                 .findFirst()
                 .orElse(null);
-
-        return album;
     }
 
     public boolean hasAlbums(){
-        return albums.isEmpty();
+        return !albums.isEmpty();
     }
 
     public Album getAlbum(String ISRC, String title){
 
-        Album album = albums.stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title))
+        return albums.stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title))
                 .findFirst()
                 .orElse(null);
-
-        return album;
     }
 
     public boolean updateAlbum(String ISRC, String title, String description, int year, String artist){
