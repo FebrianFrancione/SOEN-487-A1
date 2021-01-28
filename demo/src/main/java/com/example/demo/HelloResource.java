@@ -1,4 +1,4 @@
-package com.example.REST;
+package com.example.demo;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
