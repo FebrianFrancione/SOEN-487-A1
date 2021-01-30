@@ -48,8 +48,8 @@ public class ArtistsManager {
         return false;
     }
 
-    public void deleteArtist(String nickname) {
-        artists.removeIf(p -> (p.getNickname().equals(nickname)));
+    public boolean deleteArtist(String nickname) {
+        return artists.removeIf(p -> (p.getNickname().equals(nickname)));
     }
 
     public String getAllArtists(){
