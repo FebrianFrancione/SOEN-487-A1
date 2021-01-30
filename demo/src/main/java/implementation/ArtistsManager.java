@@ -48,8 +48,8 @@ public class ArtistsManager {
         return false;
     }
 
-    public void deleteArtist(String nickname) {
-        artists.removeIf(p -> (p.getNickname().equals(nickname)));
+    public boolean deleteArtist(String nickname) {
+        return artists.removeIf(p -> (p.getNickname().equals(nickname)));
     }
 
     public String getAllArtists(){
@@ -93,8 +93,8 @@ public class ArtistsManager {
 
     private void populate() {
         String[] nicknames = {"Ronaldo", "Tiger Woods", "Rocky", "Iron Man"};
-        String[] first_names = {"Ronaldo Luís", "Eldrick", "Rocco", "Anthony Edward"};
-        String[] last_names = {"Nazário de Lima", "Tont Woods", "Francis Marchegiano", "Stark"};
+        String[] first_names = {"Ronaldo Luis", "Eldrick", "Rocco", "Anthony Edward"};
+        String[] last_names = {"Nazario de Lima", "Tont Woods", "Francis Marchegiano", "Stark"};
         String[] bios = {"Brazilian soccer player", "American professional golfer", "American professional boxer",
                 "fictional super hero"};
 
