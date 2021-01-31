@@ -7,9 +7,13 @@ public class TestMain {
 
     public static void main(String[] args) {
 
+        //create new AlbumsManager obj
         AlbumsManager albumsManager = new AlbumsManager();
+        //create new Album ArrayList
         ArrayList<Album> albums = new ArrayList<>();
+        //random year generated
         int year = (int)(Math.random() * (2020 - 1979 + 1) + 1979);
+
 
         //Creating 10 random albums and artists
         for(int i = 0; i < 10; i++) {
@@ -18,7 +22,7 @@ public class TestMain {
             String description = getRandomWord();
             String artist = getRandomWord();
 
-            Album newAlbum =new Album(ISRC, title, description, year, artist);
+            Album newAlbum = new Album(ISRC, title, description, year, artist);
             albums.add(newAlbum);
             albumsManager.createAlbum(ISRC, title, description, year, artist);
             year = (int)(Math.random() * (2020 - 1979 + 1) + 1979);
@@ -40,12 +44,12 @@ public class TestMain {
         albumsManager.deleteAlbum(isrc);
         System.out.println("\n\nGetting all albums after deleting album with ISRC " + isrc + "\n" + albumsManager.getAllAlbums());
 
+
     }
 
     //Helper to get some random words
     public static String getRandomWord(){
         Random random = new Random();
-
         return random.ints(97, 122 + 1)
                 .limit(10)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)

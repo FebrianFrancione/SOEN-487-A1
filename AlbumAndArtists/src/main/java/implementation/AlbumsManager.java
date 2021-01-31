@@ -7,21 +7,23 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AlbumsManager {
+
     private static ArrayList<Album> albums;
 
+    //constructor initializing albums arraylist
     public AlbumsManager() {
         albums = new ArrayList<>();
     }
 
+    //create new album
     public Album createAlbum(String ISRC, String title, String description, int year, String artist){
         if(getAlbum(ISRC) == null){
             Album newAlbum = new Album(ISRC, title, description, year, artist);
             albums.add(newAlbum);
             return newAlbum;
-        }
-
-        else
+        } else {
             return null;
+        }
     }
 
     public boolean deleteAlbum(String ISRC) {
@@ -33,7 +35,6 @@ public class AlbumsManager {
     }
 
     public Album getAlbum(String ISRC){
-
         return albums.stream().filter(album1 -> album1.getISRC().equals(ISRC))
                 .findFirst()
                 .orElse(null);
@@ -44,7 +45,6 @@ public class AlbumsManager {
     }
 
     public Album getAlbum(String ISRC, String title){
-
         return albums.stream().filter(album1 -> album1.getISRC().equals(ISRC) && album1.getTitle().equals(title))
                 .findFirst()
                 .orElse(null);
