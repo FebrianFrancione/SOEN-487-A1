@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/A&amp;AServices/A&amp;AServices.iml" filepath="$PROJECT_DIR$/A&amp;AServices/A&amp;AServices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AServices/A&amp;AServices.iml" filepath="$PROJECT_DIR$/AServices/A&amp;AServices.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SOEN-487-A1.iml" filepath="$PROJECT_DIR$/.idea/SOEN-487-A1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AlbumAndArtists/jersey-service.iml" filepath="$PROJECT_DIR$/AlbumAndArtists/jersey-service.iml" />
     </modules>
   </component>
 </project>

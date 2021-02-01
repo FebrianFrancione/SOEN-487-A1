@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/A&amp;AServices" />
+    <file type="web" url="file://$PROJECT_DIR$/AServices" />
     <file type="web" url="file://$PROJECT_DIR$/REST" />
     <file type="web" url="file://$PROJECT_DIR$/RestGlassfishHelloWorld" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/AlbumAndArtists/pom.xml" />
         <option value="$PROJECT_DIR$/demo/pom.xml" />
       </list>
     </option>
