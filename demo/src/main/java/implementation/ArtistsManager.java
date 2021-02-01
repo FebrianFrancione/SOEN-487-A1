@@ -92,7 +92,7 @@ public class ArtistsManager {
     }
 
     private void populate() {
-        String[] nicknames = {"Ronaldo", "Tiger Woods", "Rocky", "Iron Man"};
+        String[] nicknames = {"Ronaldo", "Tiger_Woods", "Rocky", "Iron_Man"};
         String[] first_names = {"Ronaldo Luis", "Eldrick", "Rocco", "Anthony Edward"};
         String[] last_names = {"Nazario de Lima", "Tont Woods", "Francis Marchegiano", "Stark"};
         String[] bios = {"Brazilian soccer player", "American professional golfer", "American professional boxer",
