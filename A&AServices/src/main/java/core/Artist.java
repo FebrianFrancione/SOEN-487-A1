@@ -48,10 +48,10 @@ public class Artist {
     @Override
     public String toString() {
         return "Artist {" +
-                "nickname='" + nickname + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", biography='" + biography + '\'' +
+                "Nickname='" + nickname + '\'' +
+                ", First name='" + first_name + '\'' +
+                ", Last name='" + last_name + '\'' +
+                ", Biography='" + biography + '\'' +
                 '}';
     }
 

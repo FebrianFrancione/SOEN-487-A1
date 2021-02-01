@@ -7,11 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jersey-service" />
-        <module name="demo" />
+        <module name="A&amp;AServices" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="demo" target="1.8" />
+      <module name="A&amp;AServices" target="1.8" />
       <module name="jersey-service" target="8" />
       <module name="REST" target="1.8" />
       <module name="RestGlassfishHelloWorld" target="1.8" />
