@@ -23,7 +23,7 @@ Servlet integration using Tomcat
  I choose port 8980, you can choose any other port you wish.
  
 <ul>
-  <li>GET by nickname: curl -v http://localhost:8980/demo_war/artists?nickname={nickname}</li>
+  <li>GET by nickname: curl -v -G http://localhost:8980/demo_war/artists --data-urlencode "nickname={nickname}"</li>
   <li>GET ALL ARTISTS: curl -v http://localhost:8980/demo_war/artists</li>
   <li>POST: curl -v -d "nickname={nickname}&first_name={first_name}&last_name={last_name}&biography={biography}" http://localhost:8980/demo_war/artists</li>
   <li>DELETE: curl -v -X DELETE http://localhost:8980/demo_war/artists?nickname={nickname}</li>
