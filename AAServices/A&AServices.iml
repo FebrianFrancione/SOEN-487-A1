@@ -17,14 +17,14 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output url="file://$MODULE_DIR$/../AServices/target/classes" />
-    <output-test url="file://$MODULE_DIR$/../AServices/target/test-classes" />
-    <content url="file://$MODULE_DIR$/../AServices">
-      <sourceFolder url="file://$MODULE_DIR$/../AServices/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../AServices/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../AServices/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../AServices/src/test/resources" type="java-test-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/../AServices/target" />
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -43,7 +43,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../AServices/lib/javax.ws.rs-api-2.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/javax.ws.rs-api-2.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
