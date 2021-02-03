@@ -43,7 +43,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/javax.ws.rs-api-2.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/lib/javax.ws.rs-api-2.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -67,5 +67,17 @@
     <orderEntry type="library" name="Maven: org.glassfish.jersey.media:jersey-media-jaxb:2.17" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.18.1-GA" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/webapp/lib/httpclient-4.5.13.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/lib/httpcore-4.4.13.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
