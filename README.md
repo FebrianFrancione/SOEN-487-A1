@@ -2,8 +2,8 @@
 
 Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>, <i>Kiho Lee 40073402</i>
 
-<h3>Album Requests:<h3>
-  Port running on 8080 - separated form the servlet's 8980
+<h2>Album Requests:<h2>
+  <p>Port running on 8080 - separated form the servlet's 8980</p>
 <ul>
   <li>GET: http://localhost:8080/core/album/{ISRC}/{title}</li>
   <li>GET ALL ALBUMS by ISRC and Title: http://localhost:8080/core/album/list</li>
@@ -21,13 +21,13 @@ Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>,
   <li>PUT: curl --location --request PUT "http://localhost:8080/core/album/{ISRC}/{title}/{description}/{year}/{artist}"</li>
 </ul>
   
-Servlet integration using Tomcat
+<p>Servlet integration using Tomcat</p>
 
 
-<h3>Artist Requests:<h3>
- Please run the Tomcat servlet with a different port than you use the Jersey services.
- 
- I choose port 8980, you can choose any other port you wish.
+<h2>Artist Requests:<h2>
+ <p>Please run the Tomcat servlet with a different port than you use the Jersey services.</p>
+ <br>
+ <p>I chose port 8980, you can choose any other port you wish.</p>
  
 <ul>
   <li>GET by nickname: curl -v -G http://localhost:8980/demo_war/artists --data-urlencode "nickname={nickname}"</li>
