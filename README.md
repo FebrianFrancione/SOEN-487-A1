@@ -1,4 +1,4 @@
-# SOEN-487-A1
+<h1>SOEN-487-A1</h1>
 
 Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>, <i>Kiho Lee 40073402</i>
 
