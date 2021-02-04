@@ -2,7 +2,8 @@
 
 Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>, <i>Kiho Lee 40073402</i>
 
-<h3>Album Requests:<h3> 
+<h3>Album Requests:<h3>
+  Port running on 8080 - separated form the servlet's 8980
 <ul>
   <li>GET: http://localhost:8080/core/album/{ISRC}/{title}</li>
   <li>GET ALL ALBUMS by ISRC and Title: http://localhost:8080/core/album/list</li>
@@ -10,10 +11,16 @@ Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>,
   <li>DELETE: http://localhost:8080/core/album/{ISRC}</li>
   <li>PUT: http://localhost:8080/core/album/{ISRC}/{title}/{description}/{year}/{artist}</li>
 </ul>
-
-
-
-
+  
+<h4> cURL Requests from Album Service </h4>
+<ul>
+  <li>GET: curl -v http://localhost:8080/core/album/{ISRC}/{title}</li>
+  <li>GET ALL ALBUMS by ISRC and Title: curl -v http://localhost:8080/core/album/list</li>
+  <li>curl --location --request POST "http://localhost:8080/core/album/create/{ISRC}/{title}/{description}/{year}/{artist}</li>
+  <li>DELETE: curl --location --request DELETE "http://localhost:8080/core/album/create/{ISRC}"</li>
+  <li>PUT: curl --location --request PUT "http://localhost:8080/core/album/{ISRC}/{title}/{description}/{year}/{artist}"</li>
+</ul>
+  
 Servlet integration using Tomcat
 
 
