@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="A&amp;AServices" />
+        <module name="soen487" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -14,6 +14,7 @@
       <module name="jersey-service" target="8" />
       <module name="REST" target="1.8" />
       <module name="RestGlassfishHelloWorld" target="1.8" />
+      <module name="soen487" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

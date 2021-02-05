@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AAServices/A&amp;AServices.iml" filepath="$PROJECT_DIR$/AAServices/A&amp;AServices.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SOEN-487-A1.iml" filepath="$PROJECT_DIR$/.idea/SOEN-487-A1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AAServices/soen487.iml" filepath="$PROJECT_DIR$/AAServices/soen487.iml" />
     </modules>
   </component>
 </project>
