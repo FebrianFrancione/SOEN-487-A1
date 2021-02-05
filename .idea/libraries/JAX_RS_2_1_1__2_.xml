@@ -2,7 +2,7 @@
   <library name="JAX-RS-2.1.1 (2)" type="JAX-RS">
     <properties version="2.1.1" />
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/AAServices/lib/javax.ws.rs-api-2.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/AAServices/src/main/webapp/lib/javax.ws.rs-api-2.1.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
