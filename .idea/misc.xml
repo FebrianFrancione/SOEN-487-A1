@@ -9,6 +9,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/AAServices/pom.xml" />
       </list>
     </option>
   </component>
