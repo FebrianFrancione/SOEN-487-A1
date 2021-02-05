@@ -3,8 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SOEN-487-A1.iml" filepath="$PROJECT_DIR$/.idea/SOEN-487-A1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AlbumAndArtists/jersey-service.iml" filepath="$PROJECT_DIR$/AlbumAndArtists/jersey-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AAServices/soen487.iml" filepath="$PROJECT_DIR$/AAServices/soen487.iml" />
     </modules>
   </component>
 </project>
