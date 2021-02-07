@@ -1,11 +1,5 @@
 package client;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-
-import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,7 +7,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -42,10 +35,10 @@ public class ArtistsClient {
                     sendPost(sc);
                     break;
                 case 4:
-//                    updateAlbum(sc);
+                    updateArtist(sc);
                     break;
                 case 5:
-//                    deleteAlbum(sc);
+                    deleteArtist(sc);
                     break;
                 case 6:
                     System.out.println("The program is terminated.");
@@ -142,8 +135,9 @@ public class ArtistsClient {
             biography = sc.nextLine();
             biography = URLEncoder.encode(biography);
 
-            String url = "http://localhost:8980/demo_war/artists";
-            String urlParameters = String.format("nickname=%s&first_name=%s&last_name=%s&biography=%s",nickname, first_name, last_name, biography);
+            String urlParameters = "nickname=" + nickname + "&first_name=" + first_name
+                    + "&last_name=" + last_name + "&biography=" + biography;
+            String url = "http://localhost:8980/demo_war/artists?" + urlParameters;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -151,6 +145,87 @@ public class ArtistsClient {
 
             // send the parameter (query string)
             sendRequest(con, urlParameters);
+
+            int responseCode = con.getResponseCode();
+
+            if(responseCode >= 200 && responseCode <=300){
+                System.out.println(readResponse(con));
+            }else{
+                System.out.println("It is already existed.");
+                System.out.println();
+            }
+
+        }catch(InputMismatchException e){
+            sc.nextLine();
+            System.out.println("You put the wrong information. Try again.");
+            System.out.println();
+        }
+    }
+
+    private static void updateArtist(Scanner sc) throws Exception{
+        String nickname;
+        String first_name;
+        String last_name;
+        String biography;
+
+        System.out.println("Which artist's information do you want to update?");
+        try {
+            System.out.print("Nickname: ");
+            nickname = sc.nextLine();
+            nickname = URLEncoder.encode(nickname);
+
+            System.out.print("First name: ");
+            first_name = sc.nextLine();
+            first_name = URLEncoder.encode(first_name);
+
+            System.out.print("Last name: ");
+            last_name = sc.nextLine();
+            last_name = URLEncoder.encode(last_name);
+
+            System.out.print("Biography: ");
+            biography = sc.nextLine();
+            biography = URLEncoder.encode(biography);
+
+            String urlParameters = "nickname=" + nickname + "&first_name=" + first_name
+                    + "&last_name=" + last_name + "&biography=" + biography;
+            String url = "http://localhost:8980/demo_war/artists?" + urlParameters;
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+            con.setRequestMethod("PUT");
+
+            // send the parameter (query string)
+            sendRequest(con, urlParameters);
+
+            int responseCode = con.getResponseCode();
+
+            if(responseCode >= 200 && responseCode <=300){
+                System.out.println(readResponse(con));
+            }else{
+                System.out.println("It is already existed.");
+                System.out.println();
+            }
+
+        }catch(InputMismatchException e){
+            sc.nextLine();
+            System.out.println("You put the wrong information. Try again.");
+            System.out.println();
+        }
+    }
+
+    private static void deleteArtist(Scanner sc) throws Exception{
+        String nickname;
+
+        System.out.println("Please enter the nickname of the artist to delete.");
+        try {
+            System.out.print("Nickname: ");
+            nickname = sc.nextLine();
+            nickname = URLEncoder.encode(nickname);
+
+            String url = "http://localhost:8980/demo_war/artists?nickname=" + nickname;
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("DELETE");
 
             System.out.println(readResponse(con));
 
