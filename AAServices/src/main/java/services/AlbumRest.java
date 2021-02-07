@@ -5,6 +5,7 @@ import implementation.AlbumsManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,11 +21,12 @@ public class AlbumRest {
     @Path("/list")
     public Response getAlbums() {
 
-        if(albumsManager.hasAlbums())
+        if(albumsManager.hasAlbums()) {
+            System.out.println();
             return Response.ok(albumsManager.getAllAlbums()).build();
-
+        }
         else{
-            message = "Error! No albums to return!";
+            message = "No albums to return!";
 //            return Response.status(Response.Status.OK).entity(message).build();
             return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
         }
@@ -34,6 +36,8 @@ public class AlbumRest {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("{ISRC}/{title}")
     public Response getAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title) {
+        title = URLDecoder.decode(title);
+
         Album album = albumsManager.getAlbum(ISRC,title);
         if (album != null) {
             return Response.status(Response.Status.OK).entity(album.toString()).build();
@@ -47,6 +51,10 @@ public class AlbumRest {
     @Produces({MediaType.TEXT_PLAIN})
     @Path("/create/{ISRC}/{title}/{description}/{year}/{artist}")
     public Response createAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
+        title = URLDecoder.decode(title);
+        description = URLDecoder.decode(description);
+        artist = URLDecoder.decode(artist);
+
         if(ISRC == null || title == null || year == 0 || artist == null){
             message = "A Form parameter is incorrect!";
             return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
@@ -78,6 +86,10 @@ public class AlbumRest {
     @Produces({MediaType.TEXT_PLAIN})
     @Path("{ISRC}/{title}/{description}/{year}/{artist}")
     public Response modifyAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
+        title = URLDecoder.decode(title);
+        description = URLDecoder.decode(description);
+        artist = URLDecoder.decode(artist);
+
         if(ISRC == null || title == null || year == 0 || artist == null){
             message = "A Form parameter is incorrect!";
             return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
