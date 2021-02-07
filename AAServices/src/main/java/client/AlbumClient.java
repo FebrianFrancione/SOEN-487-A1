@@ -52,8 +52,8 @@ public class AlbumClient {
 
     private static int menu(Scanner sc){
         System.out.println("Menu (Verb Lists) :");
-        System.out.println("1. Show the list of albums by ISRC and title");
-        System.out.println("2. Return the album info");
+        System.out.println("1. Show the list of albums");
+        System.out.println("2. Return the specific album info");
         System.out.println("3. Add a new album to the collection");
         System.out.println("4. Update album info");
         System.out.println("5. Delete the album only");
