@@ -104,15 +104,10 @@ public class ArtistsClient {
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
 
-            String url = "http://localhost:8980/demo_war/artists";
-            String urlParameters = String.format("nickname=%s",nickname);
+            String url = "http://localhost:8980/demo_war/artists?nickname=" + nickname;
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
             con.setRequestMethod("GET");
-
-            // send the parameter (query string)
-            sendRequest(con, urlParameters);
 
             System.out.println(readResponse(con));
 
