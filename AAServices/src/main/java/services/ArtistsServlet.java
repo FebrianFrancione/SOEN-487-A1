@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @WebServlet(name = "ArtistsServlet", urlPatterns = {"/artists"})
 public class ArtistsServlet extends HttpServlet {
@@ -62,7 +63,7 @@ public class ArtistsServlet extends HttpServlet {
         String nickname = request.getParameter("nickname");
 
         if(nickname == null || nickname.isEmpty()) {
-            ArrayList<Artist> artists = artistsManager.getList();
+            CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
             message = artists.isEmpty() ? "There are no artists to display\n"
                     : ("Artists:\n" + artistsManager.getAllArtists() + "\n");
             status = HttpServletResponse.SC_OK;

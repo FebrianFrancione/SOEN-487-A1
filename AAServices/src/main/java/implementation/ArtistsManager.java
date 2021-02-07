@@ -4,15 +4,17 @@ import core.Artist;
 
 import javax.servlet.ServletContext;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class ArtistsManager {
-    private ArrayList<Artist> artists;
+    private static CopyOnWriteArrayList<Artist> artists;
     private ServletContext servletContext;
 
     public ArtistsManager() {
-        this.artists = new ArrayList<>();
+        artists = new CopyOnWriteArrayList<>();
         populate();
     }
 
@@ -28,12 +30,12 @@ public class ArtistsManager {
             return null;
     }
 
-    public ArrayList<Artist> getList(){
+    public CopyOnWriteArrayList<Artist> getList(){
         if(servletContext == null)
             return null;
         if(!hasArtists())
             populate();
-        return this.artists;
+        return artists;
     }
 
     public void setServletContext(ServletContext sctx){
@@ -53,7 +55,13 @@ public class ArtistsManager {
     }
 
     public String getAllArtists(){
-        return artists.stream().map(Objects::toString).collect(Collectors.joining("\n"));
+        StringBuilder albumsString= new StringBuilder();
+        Iterator<Artist> itr = artists.iterator();
+        while(itr.hasNext()) {
+            albumsString.append(itr.next().toString()).append("\n");
+        }
+        return albumsString.toString();
+        //return artists.stream().map(Objects::toString).collect(Collectors.joining("\n"));
     }
 
     public boolean hasArtists(){

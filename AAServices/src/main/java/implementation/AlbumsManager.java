@@ -3,16 +3,18 @@ package implementation;
 import core.Album;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class AlbumsManager {
 
-    private static ArrayList<Album> albums;
+    private static CopyOnWriteArrayList<Album> albums;
 
     //constructor initializing albums arraylist
     public AlbumsManager() {
-        albums = new ArrayList<>();
+        albums = new CopyOnWriteArrayList<>();
     }
 
     //create new album
@@ -31,7 +33,13 @@ public class AlbumsManager {
     }
 
     public String getAllAlbums(){
-        return albums.stream().map(Objects::toString).collect(Collectors.joining("\n"));
+        StringBuilder albumsString= new StringBuilder();
+        Iterator<Album> itr = albums.iterator();
+        while(itr.hasNext()) {
+            albumsString.append(itr.next().toString()).append("\n");
+        }
+        return albumsString.toString();
+        //return albums.stream().map(Objects::toString).collect(Collectors.joining("\n"));
     }
 
     public Album getAlbum(String ISRC){

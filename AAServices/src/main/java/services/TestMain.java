@@ -5,20 +5,39 @@ import core.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TestMain {
+public class TestMain extends Thread{
 
-    public static void main(String[] args) {
+    //create new AlbumsManager obj
+    static AlbumsManager albumsManager = new AlbumsManager();
 
-        //create new AlbumsManager obj
-        AlbumsManager albumsManager = new AlbumsManager();
+    public void run()
+    {
+        int year = (int)(Math.random() * (2020 - 1979 + 1) + 1979);
+        for(int i = 0; i < 4; i++) {
+            String ISRC = getRandomWord();
+            System.out.println("\n\nAdding thread album " + ISRC + "\n");
+            albumsManager.createAlbum(ISRC, getRandomWord(), getRandomWord(), year, getRandomWord());
+
+            if(albumsManager.updateAlbum(ISRC, "Gonzaga 68", "Gonzaga '68 bootleg features the band performing life", 1994, "Led Zeppelin"))
+                System.out.println("\n\nAfter modified album " + ISRC + ":\n" + albumsManager.getAlbum(ISRC));
+
+            year = (int)(Math.random() * (2020 - 1979 + 1) + 1979);
+        }
+
+    }
+
+    public static void main(String[] args) throws InterruptedException{
+
         //create new Album ArrayList
         ArrayList<Album> albums = new ArrayList<>();
         //random year generated
         int year = (int)(Math.random() * (2020 - 1979 + 1) + 1979);
 
+        TestMain t = new TestMain();
+        t.start();
 
         //Creating 10 random albums and artists
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 8; i++) {
             String ISRC = getRandomWord();
             String title = getRandomWord();
             String description = getRandomWord();
@@ -28,13 +47,13 @@ public class TestMain {
             albums.add(newAlbum);
             albumsManager.createAlbum(ISRC, title, description, year, artist);
             year = (int)(Math.random() * (2020 - 1979 + 1) + 1979);
+
+            //Printing all albums and artists
+            System.out.println("\n\nGetting all albums\n" + albumsManager.getAllAlbums());
         }
 
-        //Printing all albums and artists
-        System.out.println("\n\nGetting all albums\n" + albumsManager.getAllAlbums());
-
         //Getting a specific album
-        String isrc = albums.get(5).getISRC();
+        String isrc = albums.get(3).getISRC();
         Album testAlbum = albumsManager.getAlbum(isrc);
         System.out.println("\n\nGetting album with ISRC : " + isrc + "\n" + testAlbum);
 
