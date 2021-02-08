@@ -20,7 +20,7 @@ public class ClientDriver {
         int choose=0;
         boolean correct = true;
 
-        System.out.println("Menu : ");
+        System.out.println("\nMenu : ");
         System.out.println("1. Album");
         System.out.println("2. Artist");
         System.out.println("3. Quit");
@@ -133,7 +133,7 @@ public class ClientDriver {
     }
 
     private static int AlbumsMenu(Scanner sc){
-        System.out.println("Menu (Verb Lists) :");
+        System.out.println("\n\nMenu (Verb Lists) :");
         System.out.println("1. Show the list of albums");
         System.out.println("2. Return the specific album info");
         System.out.println("3. Add a new album to the collection");
@@ -156,7 +156,7 @@ public class ClientDriver {
     }
 
     private static int ArtistsMenu(Scanner sc){
-        System.out.println("Menu (Verb Lists) :");
+        System.out.println("\n\nMenu (Verb Lists) :");
         System.out.println("1. Show the list of artists");
         System.out.println("2. Return the specific artists info");
         System.out.println("3. Add a new artist to the collection");

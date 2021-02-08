@@ -1,7 +1,6 @@
 package client;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
@@ -10,9 +9,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class ArtistsClient {
 
@@ -21,8 +17,9 @@ public class ArtistsClient {
             HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists");
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
-            System.out.println(result);
             System.out.println();
+            System.out.println(result);
+
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -33,8 +30,8 @@ public class ArtistsClient {
             HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists?nickname=" + nickname);
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
-            System.out.println(result);
             System.out.println();
+            System.out.println(result);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -45,8 +42,8 @@ public class ArtistsClient {
             HttpPost request = new HttpPost("http://localhost:8980/demo_war/artists?nickname=" + nickname + "&first_name=" + first_name + "&last_name=" + last_name + "&biography=" + biography);
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
-            System.out.println(result);
             System.out.println();
+            System.out.println(result);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -58,8 +55,8 @@ public class ArtistsClient {
             request.setEntity(new StringEntity("nickname=" + nickname + "#first_name=" + first_name + "#last_name=" + last_name + "#biography=" + biography));
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
-            System.out.println(result);
             System.out.println();
+            System.out.println(result);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -70,8 +67,8 @@ public class ArtistsClient {
             HttpDelete request = new HttpDelete("http://localhost:8980/demo_war/artists?nickname=" + nickname);
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
-            System.out.println(result);
             System.out.println();
+            System.out.println(result);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -80,12 +77,8 @@ public class ArtistsClient {
     private static ResponseHandler readResponse() {
         ResponseHandler<String> responseHandler = response -> {
             int status = response.getStatusLine().getStatusCode();
-            if (status >= 200 && status < 300) {
-                HttpEntity entity = response.getEntity();
-                return entity != null ? EntityUtils.toString(entity) : null;
-            } else {
-                throw new ClientProtocolException("Unexpected response status: " + status);
-            }
+            HttpEntity entity = response.getEntity();
+            return entity != null ? EntityUtils.toString(entity) : null;
         };
 
         return responseHandler;
