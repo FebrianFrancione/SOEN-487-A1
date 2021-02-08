@@ -1,256 +1,80 @@
 package client;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class AlbumClient {
 
-    public AlbumClient() throws InterruptedException{
-        Scanner sc = new Scanner(System.in);
-        int choose;
-
-        do {
-            choose = menu(sc);
-
-            switch(choose){
-                // If the user put a word
-                case 0:
-                    break;
-                case 1:
-                    showAll();
-                    break;
-                case 2:
-                    getAlbums(sc);
-                    break;
-                case 3:
-                    addAlbum(sc);
-                    break;
-                case 4:
-                    updateAlbum(sc);
-                    break;
-                case 5:
-                    deleteAlbum(sc);
-                    break;
-                case 6:
-                    System.out.println("The program is terminated.");
-                    break;
-                default:
-                    System.out.println("You chose the wrong number.");
-            }
-
-            Thread.sleep(3000);
-        }while(choose != 6);
-
-        System.exit(0);
-    }
-
-    private static int menu(Scanner sc){
-        System.out.println("Menu (Verb Lists) :");
-        System.out.println("1. Show the list of albums");
-        System.out.println("2. Return the specific album info");
-        System.out.println("3. Add a new album to the collection");
-        System.out.println("4. Update album info");
-        System.out.println("5. Delete the album only");
-        System.out.println("6. Quit");
-        System.out.println();
-
-        System.out.print("Please choose one of the above numbers : ");
-        try{
-            int choose = sc.nextInt();
-            System.out.println();
-            return choose;
-        }catch(InputMismatchException e){
-            sc.nextLine();
-            System.out.println("Please put a number. Try again.");
-            System.out.println();
-            return 0;
-        }
-    }
-
-    private static void showAll(){
+    public void showAll(){
         try(CloseableHttpClient client = HttpClients.createDefault()){
             HttpGet request = new HttpGet("http://localhost:8080/core/album/list");
-
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
-            System.out.println(result);
             System.out.println();
+            System.out.println(result);
         }catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    private static void getAlbums(Scanner sc){
-        String ISRC;
-        String title;
-
-        System.out.println("Please enter the ISRC and title of the album.");
-        try{
-            System.out.print("ISRC: ");
-            ISRC = sc.next();
-            sc.nextLine();
-
-            System.out.print("Title: ");
-            title = sc.nextLine();
-            title = URLEncoder.encode(title);
-
-            try(CloseableHttpClient client = HttpClients.createDefault()){
-                HttpGet request = new HttpGet(String.format("http://localhost:8080/core/album/%s/%s", ISRC, title));
-
-                ResponseHandler<String> responseHandler = readResponse();
-                String result = client.execute(request, responseHandler);
-                System.out.println(result);
-                System.out.println();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-
-        }catch(InputMismatchException e){
-            sc.nextLine();
-            System.out.println("You put the wrong information. Try again.");
+    public void getAlbums(String ISRC, String title){
+        try(CloseableHttpClient client = HttpClients.createDefault()){
+            HttpGet request = new HttpGet(String.format("http://localhost:8080/core/album/%s/%s", ISRC, title));
+            ResponseHandler<String> responseHandler = readResponse();
+            String result = client.execute(request, responseHandler);
             System.out.println();
+            System.out.println(result);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
-    private static void addAlbum(Scanner sc){
-        String ISRC;
-        String title;
-        String description;
-        int year;
-        String artist;
-
-        System.out.println("Please enter the information of the album.");
-        try {
-            System.out.print("ISRC: ");
-            ISRC = sc.next();
-            sc.nextLine();
-
-            System.out.print("Title: ");
-            title = sc.nextLine();
-            title = URLEncoder.encode(title);
-
-            System.out.print("Description: ");
-            description = sc.nextLine();
-            description = URLEncoder.encode(description);
-
-            System.out.print("Year: ");
-            year = sc.nextInt();
-            sc.nextLine();
-
-            System.out.print("Artist: ");
-            artist = sc.nextLine();
-            artist = URLEncoder.encode(artist);
-
-            try(CloseableHttpClient client = HttpClients.createDefault()){
-                HttpPost request = new HttpPost(String.format("http://localhost:8080/core/album/create/%s/%s/%s/%d/%s", ISRC, title, description, year, artist));
-
-                ResponseHandler<String> responseHandler = readResponse();
-                String result = client.execute(request, responseHandler);
-                System.out.println(result);
-                System.out.println();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-
-        }catch(InputMismatchException e){
-            sc.nextLine();
-            System.out.println("You put the wrong information. Try again.");
+    public void addAlbum(String ISRC, String title, String description, String artist, int year){
+        try(CloseableHttpClient client = HttpClients.createDefault()){
+            HttpPost request = new HttpPost(String.format("http://localhost:8080/core/album/create/%s/%s/%s/%d/%s", ISRC, title, description, year, artist));
+            ResponseHandler<String> responseHandler = readResponse();
+            String result = client.execute(request, responseHandler);
             System.out.println();
+            System.out.println(result);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
-    private static void updateAlbum(Scanner sc){
-        String ISRC;
-        String title;
-        String description;
-        int year;
-        String artist;
-
-        System.out.println("Please enter the new information of the existed album.");
-        try {
-            System.out.print("ISRC: ");
-            ISRC = sc.next();
-            sc.nextLine();
-
-            System.out.print("Title: ");
-            title = sc.nextLine();
-            title = URLEncoder.encode(title);
-
-            System.out.print("Description: ");
-            description = sc.nextLine();
-            description = URLEncoder.encode(description);
-
-            System.out.print("Year: ");
-            year = sc.nextInt();
-            sc.nextLine();
-
-            System.out.print("Artist: ");
-            artist = sc.nextLine();
-            artist = URLEncoder.encode(artist);
-
-            try(CloseableHttpClient client = HttpClients.createDefault()){
-                HttpPut request = new HttpPut(String.format("http://localhost:8080/core/album/%s/%s/%s/%d/%s", ISRC, title, description, year, artist));
-
-                ResponseHandler<String> responseHandler = readResponse();
-                String result = client.execute(request, responseHandler);
-                System.out.println(result);
-                System.out.println();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-
-        }catch(InputMismatchException e){
-            sc.nextLine();
-            System.out.println("You put the wrong information. Try again.");
+    public void updateAlbum(String ISRC, String title, String description, String artist, int year){
+        try(CloseableHttpClient client = HttpClients.createDefault()){
+            HttpPut request = new HttpPut(String.format("http://localhost:8080/core/album/%s/%s/%s/%d/%s", ISRC, title, description, year, artist));
+            ResponseHandler<String> responseHandler = readResponse();
+            String result = client.execute(request, responseHandler);
             System.out.println();
+            System.out.println(result);;
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
-    private static void deleteAlbum(Scanner sc){
-        String ISRC;
-
-        System.out.println("What album do you want to delete?");
-        try{
-            System.out.print("ISRC: ");
-            ISRC = sc.next();
-
-            try(CloseableHttpClient client = HttpClients.createDefault()){
-                HttpDelete request = new HttpDelete(String.format("http://localhost:8080/core/album/%s", ISRC));
-
-                ResponseHandler<String> responseHandler = readResponse();
-                String result = client.execute(request, responseHandler);
-                System.out.println(result);
-                System.out.println();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-
-        }catch(InputMismatchException e){
-            sc.nextLine();
-            System.out.println("You put the wrong information. Try again.");
+    public void deleteAlbum(String ISRC){
+        try(CloseableHttpClient client = HttpClients.createDefault()){
+            HttpDelete request = new HttpDelete(String.format("http://localhost:8080/core/album/%s", ISRC));
+            ResponseHandler<String> responseHandler = readResponse();
+            String result = client.execute(request, responseHandler);
             System.out.println();
+            System.out.println(result);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
     private static ResponseHandler readResponse() {
         ResponseHandler<String> responseHandler = response -> {
             int status = response.getStatusLine().getStatusCode();
-            if (status >= 200 && status < 300) {
-                HttpEntity entity = response.getEntity();
-                return entity != null ? EntityUtils.toString(entity) : null;
-            } else {
-                throw new ClientProtocolException("Unexpected response status: " + status);
-            }
+            HttpEntity entity = response.getEntity();
+            return entity != null ? EntityUtils.toString(entity) : null;
         };
 
         return responseHandler;
