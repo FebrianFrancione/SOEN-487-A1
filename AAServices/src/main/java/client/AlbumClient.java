@@ -1,8 +1,12 @@
 package client;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -11,7 +15,7 @@ import java.util.Scanner;
 
 public class AlbumClient {
 
-    public static void main(String[] args) throws InterruptedException{
+    public AlbumClient() throws InterruptedException{
         Scanner sc = new Scanner(System.in);
         int choose;
 
@@ -52,8 +56,8 @@ public class AlbumClient {
 
     private static int menu(Scanner sc){
         System.out.println("Menu (Verb Lists) :");
-        System.out.println("1. Show the list of albums by ISRC and title");
-        System.out.println("2. Return the album info");
+        System.out.println("1. Show the list of albums");
+        System.out.println("2. Return the specific album info");
         System.out.println("3. Add a new album to the collection");
         System.out.println("4. Update album info");
         System.out.println("5. Delete the album only");
@@ -76,8 +80,11 @@ public class AlbumClient {
     private static void showAll(){
         try(CloseableHttpClient client = HttpClients.createDefault()){
             HttpGet request = new HttpGet("http://localhost:8080/core/album/list");
-            CloseableHttpResponse response = client.execute(request);
-            System.out.println(readResponse(response));
+
+            ResponseHandler<String> responseHandler = readResponse();
+            String result = client.execute(request, responseHandler);
+            System.out.println(result);
+            System.out.println();
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -99,8 +106,11 @@ public class AlbumClient {
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpGet request = new HttpGet(String.format("http://localhost:8080/core/album/%s/%s", ISRC, title));
-                CloseableHttpResponse response = client.execute(request);
-                System.out.println(readResponse(response));
+
+                ResponseHandler<String> responseHandler = readResponse();
+                String result = client.execute(request, responseHandler);
+                System.out.println(result);
+                System.out.println();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -143,8 +153,11 @@ public class AlbumClient {
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpPost request = new HttpPost(String.format("http://localhost:8080/core/album/create/%s/%s/%s/%d/%s", ISRC, title, description, year, artist));
-                CloseableHttpResponse response = client.execute(request);
-                System.out.println(readResponse(response));
+
+                ResponseHandler<String> responseHandler = readResponse();
+                String result = client.execute(request, responseHandler);
+                System.out.println(result);
+                System.out.println();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -187,8 +200,11 @@ public class AlbumClient {
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpPut request = new HttpPut(String.format("http://localhost:8080/core/album/%s/%s/%s/%d/%s", ISRC, title, description, year, artist));
-                CloseableHttpResponse response = client.execute(request);
-                System.out.println(readResponse(response));
+
+                ResponseHandler<String> responseHandler = readResponse();
+                String result = client.execute(request, responseHandler);
+                System.out.println(result);
+                System.out.println();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -210,8 +226,11 @@ public class AlbumClient {
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpDelete request = new HttpDelete(String.format("http://localhost:8080/core/album/%s", ISRC));
-                CloseableHttpResponse response = client.execute(request);
-                System.out.println(readResponse(response));
+
+                ResponseHandler<String> responseHandler = readResponse();
+                String result = client.execute(request, responseHandler);
+                System.out.println(result);
+                System.out.println();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -223,14 +242,17 @@ public class AlbumClient {
         }
     }
 
-    private static String readResponse(CloseableHttpResponse response) throws IOException{
-        Scanner sc = new Scanner(response.getEntity().getContent());
-        StringBuilder result = new StringBuilder();
-        while(sc.hasNext()){
-            result.append(sc.nextLine());
-            result.append("\n");
-        }
-        response.close();
-        return result.toString();
+    private static ResponseHandler readResponse() {
+        ResponseHandler<String> responseHandler = response -> {
+            int status = response.getStatusLine().getStatusCode();
+            if (status >= 200 && status < 300) {
+                HttpEntity entity = response.getEntity();
+                return entity != null ? EntityUtils.toString(entity) : null;
+            } else {
+                throw new ClientProtocolException("Unexpected response status: " + status);
+            }
+        };
+
+        return responseHandler;
     }
 }
