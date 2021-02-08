@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class AlbumClient {
 
-    public static void main(String[] args) throws InterruptedException{
+    public AlbumClient() throws InterruptedException{
         Scanner sc = new Scanner(System.in);
         int choose;
 

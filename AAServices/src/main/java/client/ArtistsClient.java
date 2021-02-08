@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class ArtistsClient {
 
-    public static void main(String[] args) throws Exception{
+    public ArtistsClient() throws InterruptedException {
         Scanner sc = new Scanner(System.in);
         int choose;
 
