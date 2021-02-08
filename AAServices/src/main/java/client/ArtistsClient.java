@@ -1,6 +1,7 @@
 package client;
 
 import org.apache.http.client.methods.*;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
@@ -173,7 +174,8 @@ public class ArtistsClient {
             biography = URLEncoder.encode(biography);
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
-                HttpPut request = new HttpPut("http://localhost:8980/demo_war/artists?nickname=" + nickname + "&first_name=" + first_name + "&last_name=" + last_name + "&biography=" + biography);
+                HttpPut request = new HttpPut("http://localhost:8980/demo_war/artists");
+                request.setEntity(new StringEntity("nickname=" + nickname + "#first_name=" + first_name + "#last_name=" + last_name + "#biography=" + biography));
                 CloseableHttpResponse response = client.execute(request);
                 System.out.println(readResponse(response));
             }catch(IOException e){
