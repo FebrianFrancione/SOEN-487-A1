@@ -159,19 +159,15 @@ public class ArtistsClient {
         try {
             System.out.print("Nickname: ");
             nickname = sc.nextLine();
-            nickname = URLEncoder.encode(nickname);
 
             System.out.print("First name: ");
             first_name = sc.nextLine();
-            first_name = URLEncoder.encode(first_name);
 
             System.out.print("Last name: ");
             last_name = sc.nextLine();
-            last_name = URLEncoder.encode(last_name);
 
             System.out.print("Biography: ");
             biography = sc.nextLine();
-            biography = URLEncoder.encode(biography);
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpPut request = new HttpPut("http://localhost:8980/demo_war/artists");
