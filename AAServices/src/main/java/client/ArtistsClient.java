@@ -1,9 +1,13 @@
 package client;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -79,8 +83,11 @@ public class ArtistsClient {
     private static void showAll(){
         try(CloseableHttpClient client = HttpClients.createDefault()){
             HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists");
-            CloseableHttpResponse response = client.execute(request);
-            System.out.println(readResponse(response));
+
+            ResponseHandler<String> responseHandler = readResponse();
+            String result = client.execute(request, responseHandler);
+            System.out.println(result);
+            System.out.println();
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -97,8 +104,11 @@ public class ArtistsClient {
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists?nickname=" + nickname);
-                CloseableHttpResponse response = client.execute(request);
-                System.out.println(readResponse(response));
+
+                ResponseHandler<String> responseHandler = readResponse();
+                String result = client.execute(request, responseHandler);
+                System.out.println(result);
+                System.out.println();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -136,8 +146,11 @@ public class ArtistsClient {
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpPost request = new HttpPost("http://localhost:8980/demo_war/artists?nickname=" + nickname + "&first_name=" + first_name + "&last_name=" + last_name + "&biography=" + biography);
-                CloseableHttpResponse response = client.execute(request);
-                System.out.println(readResponse(response));
+
+                ResponseHandler<String> responseHandler = readResponse();
+                String result = client.execute(request, responseHandler);
+                System.out.println(result);
+                System.out.println();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -172,8 +185,11 @@ public class ArtistsClient {
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpPut request = new HttpPut("http://localhost:8980/demo_war/artists");
                 request.setEntity(new StringEntity("nickname=" + nickname + "#first_name=" + first_name + "#last_name=" + last_name + "#biography=" + biography));
-                CloseableHttpResponse response = client.execute(request);
-                System.out.println(readResponse(response));
+
+                ResponseHandler<String> responseHandler = readResponse();
+                String result = client.execute(request, responseHandler);
+                System.out.println(result);
+                System.out.println();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -196,8 +212,11 @@ public class ArtistsClient {
 
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpDelete request = new HttpDelete("http://localhost:8980/demo_war/artists?nickname=" + nickname);
-                CloseableHttpResponse response = client.execute(request);
-                System.out.println(readResponse(response));
+
+                ResponseHandler<String> responseHandler = readResponse();
+                String result = client.execute(request, responseHandler);
+                System.out.println(result);
+                System.out.println();
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -209,14 +228,17 @@ public class ArtistsClient {
         }
     }
 
-    private static String readResponse(CloseableHttpResponse response) throws IOException{
-        Scanner sc = new Scanner(response.getEntity().getContent());
-        StringBuilder result = new StringBuilder();
-        while(sc.hasNext()){
-            result.append(sc.nextLine());
-            result.append("\n");
-        }
-        response.close();
-        return result.toString();
+    private static ResponseHandler readResponse() {
+        ResponseHandler<String> responseHandler = response -> {
+            int status = response.getStatusLine().getStatusCode();
+            if (status >= 200 && status < 300) {
+                HttpEntity entity = response.getEntity();
+                return entity != null ? EntityUtils.toString(entity) : null;
+            } else {
+                throw new ClientProtocolException("Unexpected response status: " + status);
+            }
+        };
+
+        return responseHandler;
     }
 }
