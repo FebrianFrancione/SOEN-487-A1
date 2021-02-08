@@ -17,8 +17,8 @@ Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>,
   <li>GET: curl -v http://localhost:8080/core/album/{ISRC}/{title}</li>
   <li>GET ALL ALBUMS by ISRC and Title: curl -v http://localhost:8080/core/album/list</li>
   <li>POST: curl -v -d POST http://localhost:8080/core/album/create/{ISRC}/{title}/{description}/{year}/{artist}
-  <li>DELETE: curl --location --request DELETE "http://localhost:8080/core/album/create/{ISRC}"</li>
-  <li>PUT: curl --location --request PUT "http://localhost:8080/core/album/{ISRC}/{title}/{description}/{year}/{artist}"</li>
+  <li>DELETE: curl -v -X DELETE http://localhost:8080/core/album/{ISRC}</li>
+  <li>PUT: curl -v -X PUT http://localhost:8080/core/album/{ISRC}/{title}/{Descritpion}/{year}/{artist} - where ISRC is the required ID needed to find and modify the album</li>
 </ul>
   
 <p>Servlet integration using Tomcat</p>
