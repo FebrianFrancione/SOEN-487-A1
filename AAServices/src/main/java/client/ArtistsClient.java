@@ -1,18 +1,15 @@
 package client;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
+import org.apache.http.client.methods.*;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ArtistsClient {
-
-    public static final String USER_AGENT = "Mozilla/5.0";
 
     public static void main(String[] args) throws Exception{
         Scanner sc = new Scanner(System.in);
@@ -26,13 +23,13 @@ public class ArtistsClient {
                 case 0:
                     break;
                 case 1:
-                    sendGet();
+                    showAll();
                     break;
                 case 2:
                     getArtist(sc);
                     break;
                 case 3:
-                    sendPost(sc);
+                    sendArtist(sc);
                     break;
                 case 4:
                     updateArtist(sc);
@@ -78,31 +75,32 @@ public class ArtistsClient {
         }
     }
 
-    private static void sendGet() throws Exception {
-        String url = "http://localhost:8980/demo_war/artists";
-
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-
-        System.out.println(readResponse(con));
+    private static void showAll(){
+        try(CloseableHttpClient client = HttpClients.createDefault()){
+            HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists");
+            CloseableHttpResponse response = client.execute(request);
+            System.out.println(readResponse(response));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
-    private static void getArtist(Scanner sc) throws Exception{
+    private static void getArtist(Scanner sc){
         String nickname;
 
         System.out.println("Please enter the nickname of the artist.");
-        try {
+        try{
             System.out.print("Nickname: ");
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
 
-            String url = "http://localhost:8980/demo_war/artists?nickname=" + nickname;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
-
-            System.out.println(readResponse(con));
+            try(CloseableHttpClient client = HttpClients.createDefault()){
+                HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists?nickname=" + nickname);
+                CloseableHttpResponse response = client.execute(request);
+                System.out.println(readResponse(response));
+            }catch(IOException e){
+                e.printStackTrace();
+            }
 
         }catch(InputMismatchException e){
             sc.nextLine();
@@ -111,7 +109,7 @@ public class ArtistsClient {
         }
     }
 
-    private static void sendPost(Scanner sc) throws Exception{
+    private static void sendArtist(Scanner sc){
         String nickname;
         String first_name;
         String last_name;
@@ -135,24 +133,12 @@ public class ArtistsClient {
             biography = sc.nextLine();
             biography = URLEncoder.encode(biography);
 
-            String urlParameters = "nickname=" + nickname + "&first_name=" + first_name
-                    + "&last_name=" + last_name + "&biography=" + biography;
-            String url = "http://localhost:8980/demo_war/artists?" + urlParameters;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-            con.setRequestMethod("POST");
-
-            // send the parameter (query string)
-            sendRequest(con, urlParameters);
-
-            int responseCode = con.getResponseCode();
-
-            if(responseCode >= 200 && responseCode <=300){
-                System.out.println(readResponse(con));
-            }else{
-                System.out.println("It is already existed.");
-                System.out.println();
+            try(CloseableHttpClient client = HttpClients.createDefault()){
+                HttpPost request = new HttpPost("http://localhost:8980/demo_war/artists?nickname=" + nickname + "&first_name=" + first_name + "&last_name=" + last_name + "&biography=" + biography);
+                CloseableHttpResponse response = client.execute(request);
+                System.out.println(readResponse(response));
+            }catch(IOException e){
+                e.printStackTrace();
             }
 
         }catch(InputMismatchException e){
@@ -162,7 +148,7 @@ public class ArtistsClient {
         }
     }
 
-    private static void updateArtist(Scanner sc) throws Exception{
+    private static void updateArtist(Scanner sc){
         String nickname;
         String first_name;
         String last_name;
@@ -186,24 +172,12 @@ public class ArtistsClient {
             biography = sc.nextLine();
             biography = URLEncoder.encode(biography);
 
-            String urlParameters = "nickname=" + nickname + "&first_name=" + first_name
-                    + "&last_name=" + last_name + "&biography=" + biography;
-            String url = "http://localhost:8980/demo_war/artists?" + urlParameters;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-            con.setRequestMethod("PUT");
-
-            // send the parameter (query string)
-            sendRequest(con, urlParameters);
-
-            int responseCode = con.getResponseCode();
-
-            if(responseCode >= 200 && responseCode <=300){
-                System.out.println(readResponse(con));
-            }else{
-                System.out.println("It is already existed.");
-                System.out.println();
+            try(CloseableHttpClient client = HttpClients.createDefault()){
+                HttpPut request = new HttpPut("http://localhost:8980/demo_war/artists?nickname=" + nickname + "&first_name=" + first_name + "&last_name=" + last_name + "&biography=" + biography);
+                CloseableHttpResponse response = client.execute(request);
+                System.out.println(readResponse(response));
+            }catch(IOException e){
+                e.printStackTrace();
             }
 
         }catch(InputMismatchException e){
@@ -213,21 +187,22 @@ public class ArtistsClient {
         }
     }
 
-    private static void deleteArtist(Scanner sc) throws Exception{
+    private static void deleteArtist(Scanner sc){
         String nickname;
 
         System.out.println("Please enter the nickname of the artist to delete.");
-        try {
+        try{
             System.out.print("Nickname: ");
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
 
-            String url = "http://localhost:8980/demo_war/artists?nickname=" + nickname;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("DELETE");
-
-            System.out.println(readResponse(con));
+            try(CloseableHttpClient client = HttpClients.createDefault()){
+                HttpDelete request = new HttpDelete("http://localhost:8980/demo_war/artists?nickname=" + nickname);
+                CloseableHttpResponse response = client.execute(request);
+                System.out.println(readResponse(response));
+            }catch(IOException e){
+                e.printStackTrace();
+            }
 
         }catch(InputMismatchException e){
             sc.nextLine();
@@ -236,23 +211,14 @@ public class ArtistsClient {
         }
     }
 
-    private static void sendRequest(HttpURLConnection con, String urlParameters) throws IOException{
-        con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(urlParameters);
-        wr.flush();
-        wr.close();
-    }
-
-    private static String readResponse(HttpURLConnection con) throws IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-            response.append("\n");
+    private static String readResponse(CloseableHttpResponse response) throws IOException{
+        Scanner sc = new Scanner(response.getEntity().getContent());
+        StringBuilder result = new StringBuilder();
+        while(sc.hasNext()){
+            result.append(sc.nextLine());
+            result.append("\n");
         }
-        in.close();
-        return response.toString();
+        response.close();
+        return result.toString();
     }
 }
