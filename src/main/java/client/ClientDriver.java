@@ -14,7 +14,6 @@ public class ClientDriver {
 
     public static void main(String[] args){
         albumClient = new AlbumClient();
-//        artistServlet = new ArtistsServlet();
         artistClient = new ArtistsClient();
         printMainMenu();
     }
@@ -288,9 +287,6 @@ public class ClientDriver {
             System.out.print("Biography: ");
             biography = sc.nextLine();
 
-            System.out.println("add value: " + add);
-            System.out.println("update value: " + update);
-
             if(add == true){
                 nickname = URLEncoder.encode(nickname);
                 first_name = URLEncoder.encode(first_name);
@@ -304,10 +300,8 @@ public class ClientDriver {
                     throw new InputMismatchException("Last Name Error! Last Name field cannot be left blank!");
                 }
                 artistClient.sendArtist(nickname, first_name, last_name, biography);
-                System.out.println("addOrUpdateArtist: add");
             } else if(update == true) {
                 artistClient.updateArtist(nickname, first_name, last_name, biography);
-                System.out.println("addOrUpdateArtist: update");
             }
 
         }catch(InputMismatchException e){

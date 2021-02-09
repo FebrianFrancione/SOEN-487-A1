@@ -55,17 +55,14 @@ public class ArtistsManager {
         return artists.removeIf(p -> (p.getNickname().equals(nickname)));
     }
 
-    public String getAllArtists(){
-        StringBuilder albumsString= new StringBuilder();
-        Iterator<Artist> itr = artists.iterator();
-        while(itr.hasNext()) {
-            albumsString.append(itr.next().toString()).append("\n");
-//            albumsString.append("Nickname: " + itr.next().getNickname() + ", Full Name: " + itr.next().getFirst_name() + ", " + itr.next().getLast_name()).append("\n");
-//            albumsString.append(itr.next().getNickname().toString()).append("\n");
-        }
-        return albumsString.toString();
-        //return artists.stream().map(Objects::toString).collect(Collectors.joining("\n"));
-    }
+//    public String getAllArtists(){
+//        StringBuilder albumsString= new StringBuilder();
+//        Iterator<Artist> itr = artists.iterator();
+//        while(itr.hasNext()) {
+//            albumsString.append(itr.next().toString()).append("\n");
+//        }
+//        return albumsString.toString();
+//    }
 
     public String getAllArtistsByNickname() {
         StringBuilder albumsString= new StringBuilder();
@@ -77,7 +74,6 @@ public class ArtistsManager {
 
         return albumsString.toString();
     }
-
 
 
     public boolean hasArtists(){
