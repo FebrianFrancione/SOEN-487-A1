@@ -1,5 +1,7 @@
 package client;
 
+import services.ArtistsServlet;
+
 import java.net.URLEncoder;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,8 +11,10 @@ public class ClientDriver {
     public static AlbumClient albumClient;
     public static ArtistsClient artistClient;
 
+
     public static void main(String[] args){
         albumClient = new AlbumClient();
+//        artistServlet = new ArtistsServlet();
         artistClient = new ArtistsClient();
         printMainMenu();
     }
@@ -181,6 +185,7 @@ public class ClientDriver {
 
     private static void displayArtists(){
         artistClient.showAll();
+
     }
 
     private static void retrieveAlbum(Scanner sc){
@@ -215,7 +220,7 @@ public class ClientDriver {
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
 
-            artistClient.getArtist(nickname);
+//            artistClient.getArtist(nickname);
 
         }catch(InputMismatchException e){
             sc.nextLine();
@@ -297,10 +302,10 @@ public class ClientDriver {
                 }else if (last_name.isEmpty()){
                     throw new InputMismatchException("Last Name Error! Last Name field cannot be left blank!");
                 }
-                artistClient.sendArtist(nickname, first_name, last_name, biography);
+//                artistClient.sendArtist(nickname, first_name, last_name, biography);
                 System.out.println("addOrUpdateArtist: add");
             } else if(update == true) {
-                artistClient.updateArtist(nickname, first_name, last_name, biography);
+//                artistClient.updateArtist(nickname, first_name, last_name, biography);
                 System.out.println("addOrUpdateArtist: update");
             }
 
@@ -335,7 +340,7 @@ public class ClientDriver {
             System.out.print("Nickname: ");
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
-            artistClient.deleteArtist(nickname);
+//            artistClient.deleteArtist(nickname);
 
         }catch(InputMismatchException e){
             sc.nextLine();

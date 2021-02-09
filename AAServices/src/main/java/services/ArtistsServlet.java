@@ -2,16 +2,18 @@ package services;
 
 import implementation.ArtistsManager;
 import core.Artist;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Response;
 import java.io.*;
+import java.net.URI;
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @WebServlet(name = "ArtistsServlet", urlPatterns = {"/artists"})
 public class ArtistsServlet extends HttpServlet {
@@ -24,6 +26,36 @@ public class ArtistsServlet extends HttpServlet {
     public void init(){
         artistsManager = new ArtistsManager();
         artistsManager.setServletContext(this.getServletContext());
+    }
+
+    public static final String BASE_URI = "http://localhost:8080/core/";
+
+    /**
+     * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
+     * @return Grizzly HTTP server.
+     */
+
+    public static HttpServer startServer() {
+        // create a resource config that scans for JAX-RS resources and providers
+        // in com.example.rest package
+        final ResourceConfig rc = new ResourceConfig().packages("services");
+
+        // create and start a new instance of grizzly http server
+        // exposing the Jersey application at BASE_URI
+        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+    }
+
+    /**
+     * Main method.
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+        final HttpServer server = startServer();
+        System.out.println(String.format("Jersey app started with WADL available at "
+                + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
+        System.in.read();
+        server.stop();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,31 +95,73 @@ public class ArtistsServlet extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nickname = request.getParameter("nickname");
+//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String nickname = request.getParameter("nickname");
+//
+//        if(nickname == null || nickname.isEmpty()) {
+//            CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
+//            message = artists.isEmpty() ? "There are no artists to display\n"
+//                    : ("Artists testing:\n"  + "\n");
+//            status = HttpServletResponse.SC_OK;
+//        }
+//
+//        else{
+//            Artist artist = artistsManager.getArtist(nickname);
+//            if(artist != null){
+//                message = artist + "\n";
+//                status = HttpServletResponse.SC_OK;
+//            }
+//            else{
+//                message = " Artist " + nickname + " not found\n";
+//                status = HttpServletResponse.SC_NOT_FOUND;
+//            }
+//        }
+//
+//        sendResponse(response);
+//    }
 
-        if(nickname == null || nickname.isEmpty()) {
-            CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
-            message = artists.isEmpty() ? "There are no artists to display\n"
-                    : ("Artists testing:\n"  + "\n");
-            status = HttpServletResponse.SC_OK;
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String all
+
+        try{
+
+            String message = artistsManager.getAllArtists();
+//            response.setStatus(status);
+//            response.setStatus();
+            OutputStream out = response.getOutputStream();
+            out.write(message.getBytes());
+            out.flush();
+        }
+        catch (Exception e){
+            System.out.println("Error sending response");
         }
 
-        else{
-            Artist artist = artistsManager.getArtist(nickname);
-            if(artist != null){
-                message = artist + "\n";
-                status = HttpServletResponse.SC_OK;
-            }
-            else{
-                message = " Artist " + nickname + " not found\n";
-                status = HttpServletResponse.SC_NOT_FOUND;
-            }
-        }
-
-        sendResponse(response);
+//
+//        String nickname = request.getParameter("nickname");
+//
+//        if(nickname == null || nickname.isEmpty()) {
+//            CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
+//            message = artists.isEmpty() ? "There are no artists to display\n"
+//                    : ("Artists testing:\n"  + "\n");
+//            status = HttpServletResponse.SC_OK;
+//        }
+//
+//        else{
+//            Artist artist = artistsManager.getArtist(nickname);
+//            if(artist != null){
+//                message = artist + "\n";
+//                status = HttpServletResponse.SC_OK;
+//            }
+//            else{
+//                message = " Artist " + nickname + " not found\n";
+//                status = HttpServletResponse.SC_NOT_FOUND;
+//            }
+//        }
+//
+//        sendResponse(response);
+//        sendResponse(response);
     }
-
 
 
 
