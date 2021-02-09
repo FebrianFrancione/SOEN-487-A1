@@ -55,12 +55,10 @@ public class ArtistsManager {
     }
 
     public String getAllArtists(){
-        System.out.println("At get all artisits");
         StringBuilder albumsString= new StringBuilder();
         Iterator<Artist> itr = artists.iterator();
         while(itr.hasNext()) {
             albumsString.append(itr.next().toString()).append("\n");
-            albumsString.append("Nickname: " + itr.next().getNickname() + ", Full Name: " + itr.next().getFirst_name() + " " + itr.next().getLast_name()).append("\n");
         }
         return albumsString.toString();
         //return artists.stream().map(Objects::toString).collect(Collectors.joining("\n"));

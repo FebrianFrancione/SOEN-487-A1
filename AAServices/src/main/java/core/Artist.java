@@ -1,6 +1,6 @@
 package core;
 
-public class    Artist {
+public class Artist {
     private String nickname;
     private String first_name;
     private String last_name;
@@ -48,10 +48,10 @@ public class    Artist {
     @Override
     public String toString() {
         return "Artist {" +
-                "Nickname: '" + nickname + '\'' +
-                ", First name: '" + first_name + '\'' +
-                ", Last name: '" + last_name + '\'' +
-                ", Biography: '" + biography + '\'' +
+                "Nickname='" + nickname + '\'' +
+                ", First name='" + first_name + '\'' +
+                ", Last name='" + last_name + '\'' +
+                ", Biography='" + biography + '\'' +
                 '}';
     }
 

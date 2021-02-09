@@ -2,22 +2,21 @@ package services;
 
 import implementation.ArtistsManager;
 import core.Artist;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.URI;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @WebServlet(name = "ArtistsServlet", urlPatterns = {"/artists"})
 public class ArtistsServlet extends HttpServlet {
-
     private static final long serialVersionUID = 4L;
     private ArtistsManager artistsManager;
     private String message;
@@ -26,36 +25,6 @@ public class ArtistsServlet extends HttpServlet {
     public void init(){
         artistsManager = new ArtistsManager();
         artistsManager.setServletContext(this.getServletContext());
-    }
-
-    public static final String BASE_URI = "http://localhost:8080/core/";
-
-    /**
-     * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
-     * @return Grizzly HTTP server.
-     */
-
-    public static HttpServer startServer() {
-        // create a resource config that scans for JAX-RS resources and providers
-        // in com.example.rest package
-        final ResourceConfig rc = new ResourceConfig().packages("services");
-
-        // create and start a new instance of grizzly http server
-        // exposing the Jersey application at BASE_URI
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
-    }
-
-    /**
-     * Main method.
-     * @param args
-     * @throws IOException
-     */
-    public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
-        System.out.println(String.format("Jersey app started with WADL available at "
-                + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
-        System.in.read();
-        server.stop();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,22 +36,15 @@ public class ArtistsServlet extends HttpServlet {
 
         //Still need to set the HTTP response status and code
         if(nickname == null || first_name == null || last_name == null || biography == null){
-            message = "Error!: all fields are mandatory!doPost\n";
+            message = "Error: all fields are mandatory\n";
             status = HttpServletResponse.SC_BAD_REQUEST;
-//            sendResponse(response, status);
-
-            //
-//            response.setStatus(status);
-//            PrintWriter out = response.getWriter();
-//            out.println("message");
-//            out.flush();
-//            out.close();
         }
+
         else{
             Artist newArtist = artistsManager.createArtist(nickname, first_name, last_name, biography);
 
             if(newArtist != null){
-                message = "Artist created : \n" + newArtist + "\n TESTING";
+                message = "Artist created : \n" + newArtist + "\n";
                 status = HttpServletResponse.SC_CREATED;
             }
             else{
@@ -95,75 +57,30 @@ public class ArtistsServlet extends HttpServlet {
 
     }
 
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String nickname = request.getParameter("nickname");
-//
-//        if(nickname == null || nickname.isEmpty()) {
-//            CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
-//            message = artists.isEmpty() ? "There are no artists to display\n"
-//                    : ("Artists testing:\n"  + "\n");
-//            status = HttpServletResponse.SC_OK;
-//        }
-//
-//        else{
-//            Artist artist = artistsManager.getArtist(nickname);
-//            if(artist != null){
-//                message = artist + "\n";
-//                status = HttpServletResponse.SC_OK;
-//            }
-//            else{
-//                message = " Artist " + nickname + " not found\n";
-//                status = HttpServletResponse.SC_NOT_FOUND;
-//            }
-//        }
-//
-//        sendResponse(response);
-//    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nickname = request.getParameter("nickname");
 
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String all
-
-        try{
-
-            String message = artistsManager.getAllArtists();
-//            response.setStatus(status);
-//            response.setStatus();
-            OutputStream out = response.getOutputStream();
-            out.write(message.getBytes());
-            out.flush();
-        }
-        catch (Exception e){
-            System.out.println("Error sending response");
+        if(nickname == null || nickname.isEmpty()) {
+            CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
+            message = artists.isEmpty() ? "There are no artists to display\n"
+                    : ("Artists:\n" + artistsManager.getAllArtists() + "\n");
+            status = HttpServletResponse.SC_OK;
         }
 
-//
-//        String nickname = request.getParameter("nickname");
-//
-//        if(nickname == null || nickname.isEmpty()) {
-//            CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
-//            message = artists.isEmpty() ? "There are no artists to display\n"
-//                    : ("Artists testing:\n"  + "\n");
-//            status = HttpServletResponse.SC_OK;
-//        }
-//
-//        else{
-//            Artist artist = artistsManager.getArtist(nickname);
-//            if(artist != null){
-//                message = artist + "\n";
-//                status = HttpServletResponse.SC_OK;
-//            }
-//            else{
-//                message = " Artist " + nickname + " not found\n";
-//                status = HttpServletResponse.SC_NOT_FOUND;
-//            }
-//        }
-//
-//        sendResponse(response);
-//        sendResponse(response);
+        else{
+            Artist artist = artistsManager.getArtist(nickname);
+            if(artist != null){
+                message = artist + "\n";
+                status = HttpServletResponse.SC_OK;
+            }
+            else{
+                message = " Artist " + nickname + " not found\n";
+                status = HttpServletResponse.SC_NOT_FOUND;
+            }
+        }
+
+        sendResponse(response);
     }
-
-
 
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         ArrayList<String> fields = new ArrayList<>();
@@ -172,7 +89,7 @@ public class ArtistsServlet extends HttpServlet {
         String[] args = data.split("#");
 
         if(args.length != 4){
-            message = "Error: all fields are mandatory!1\n";
+            message = "Error: all fields are mandatory\n";
             status = HttpServletResponse.SC_BAD_REQUEST;
             sendResponse(response);
             return;
@@ -230,7 +147,7 @@ public class ArtistsServlet extends HttpServlet {
         String[] keyValues = arg.split("=");
 
         if(keyValues.length != 2){
-            message = "Error: all fields are mandatory!validateValues\n";
+            message = "Error: all fields are mandatory\n";
             status = HttpServletResponse.SC_BAD_REQUEST;
             return false;
         }
@@ -238,7 +155,7 @@ public class ArtistsServlet extends HttpServlet {
         String value = keyValues[1];
 
         if (value == null || value.isEmpty()) {
-            message = "Error: all fields are mandatory!validateValues2\n";
+            message = "Error: all fields are mandatory\n";
             status = HttpServletResponse.SC_BAD_REQUEST;
             return false;
         }
@@ -257,20 +174,4 @@ public class ArtistsServlet extends HttpServlet {
             System.out.println("Error sending response");
         }
     }
-//
-//    private void sendResponse(HttpServletResponse response, int status){
-//        try{
-//            response.setStatus(status);
-//            OutputStream out = response.getOutputStream();
-//            out.write(message.getBytes());
-//            out.write(Integer.parseInt("status"));
-//            out.write(status);
-//            out.flush();
-//        }
-//        catch (Exception e){
-//            System.out.println("Error sending response");
-//        }
-//    }
 }
-//curl -v -d "nickname=&first_name=feb&last_name=francione&biography=he is a complete person" http://localhost:8980/demo_1_0_SNAPSHOT_war/artists
-//get all artists by nickname curl -v http://localhost:8980/demo_war/artists
