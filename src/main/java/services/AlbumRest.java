@@ -120,3 +120,25 @@ public class AlbumRest {
 
 }
 
+
+//curl -v http://localhost:8080/core/album/ISRC/newTitle
+
+//curl -v http://localhost:8080/core/album/list
+
+//curl -v -d POST http://localhost:8080/core/album/create/ISRC4/title/null/1950/artist
+
+//curl -v -X PUT http://localhost:8080/core/album/ISRC4/titleNEW/NEWDESC/1951/NEWARTIST
+
+//curl -v -X DELETE http://localhost:8080/core/album/ISRC4
+
+
+//artist curls
+
+//curl -v -G http://localhost:8980/SOEN_REDO_war_exploded/artists --data-urlencode "nickname=Ronaldo"
+//curl -v http://localhost:8980/SOEN_REDO_war_exploded/artists
+
+//curl -v -d "nickname=febu&first_name=feb&last_name=fran&biography=" http://localhost:8980/SOEN_REDO_war_exploded/artists
+
+//curl -v -X PUT -d "nickname=febu#first_name=fwefewffw#last_name=fwefwf#biography=newBIOOO" http://localhost:8980/SOEN_REDO_war_exploded/artists
+
+//curl -v -X DELETE http://localhost:8980/SOEN_REDO_war_exploded/artists?nickname=Ronaldo
