@@ -84,3 +84,7 @@ public class ArtistsClient {
         return responseHandler;
     }
 }
+
+//curl -v -d "nickname=febu&first_name=feb&last_name=fran&biography=dsdsdsds" http://localhost:8980/demo_war/artists
+
+// curl -v http://localhost:8980/demo_war/artists

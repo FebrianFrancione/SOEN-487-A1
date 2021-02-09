@@ -220,7 +220,7 @@ public class ClientDriver {
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
 
-//            artistClient.getArtist(nickname);
+            artistClient.getArtist(nickname);
 
         }catch(InputMismatchException e){
             sc.nextLine();
@@ -270,6 +270,7 @@ public class ClientDriver {
         }
     }
 
+
     private static void addOrUpdateArtist(boolean add, boolean update, Scanner sc){
         String nickname;
         String first_name;
@@ -302,10 +303,10 @@ public class ClientDriver {
                 }else if (last_name.isEmpty()){
                     throw new InputMismatchException("Last Name Error! Last Name field cannot be left blank!");
                 }
-//                artistClient.sendArtist(nickname, first_name, last_name, biography);
+                artistClient.sendArtist(nickname, first_name, last_name, biography);
                 System.out.println("addOrUpdateArtist: add");
             } else if(update == true) {
-//                artistClient.updateArtist(nickname, first_name, last_name, biography);
+                artistClient.updateArtist(nickname, first_name, last_name, biography);
                 System.out.println("addOrUpdateArtist: update");
             }
 
@@ -340,7 +341,7 @@ public class ClientDriver {
             System.out.print("Nickname: ");
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
-//            artistClient.deleteArtist(nickname);
+            artistClient.deleteArtist(nickname);
 
         }catch(InputMismatchException e){
             sc.nextLine();

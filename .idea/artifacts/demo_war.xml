@@ -9,6 +9,12 @@
     </properties>
     <root id="archive" name="demo-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="demo:war exploded" />
+      <element id="javaee-facet-resources" facet="SOEN-487-A1/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="SOEN-487-A1" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>
