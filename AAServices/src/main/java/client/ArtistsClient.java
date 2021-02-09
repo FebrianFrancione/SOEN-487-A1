@@ -44,7 +44,7 @@ public class ArtistsClient {
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
             System.out.println();
-            System.out.println(result);
+            System.out.println("\n\nresult: " + result);
             System.out.println("Successfully posted artist");
         }catch(IOException e){
             e.printStackTrace();

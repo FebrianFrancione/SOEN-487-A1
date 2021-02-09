@@ -291,17 +291,24 @@ public class ClientDriver {
                 first_name = URLEncoder.encode(first_name);
                 last_name = URLEncoder.encode(last_name);
                 biography = URLEncoder.encode(biography);
+                if(nickname.isEmpty()){
+                    throw new InputMismatchException("Nickname Error! Nickname field cannot be left blank!");
+                }else if(first_name.isEmpty()){
+                    throw new InputMismatchException("First Name Error! First Name field cannot be left blank!");
+                }else if (last_name.isEmpty()){
+                    throw new InputMismatchException("Last Name Error! Last Name field cannot be left blank!");
+                }
                 artistClient.sendArtist(nickname, first_name, last_name, biography);
-                System.out.println("add!!@");
+                System.out.println("addOrUpdateArtist: add");
             }
             else if(update)
                 artistClient.updateArtist(nickname, first_name, last_name, biography);
-            System.out.println("update!!@2");
+            System.out.println("addOrUpdateArtist: update");
 
 
         }catch(InputMismatchException e){
-            sc.nextLine();
-            System.out.println("You put the wrong information. Try again.");
+//            sc.nextLine();
+            System.out.println("You put the wrong information: " + e.getMessage() + " Try again.");
             System.out.println();
         }
     }
