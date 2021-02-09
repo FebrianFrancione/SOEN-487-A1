@@ -17,7 +17,6 @@ public class ArtistsClient {
             HttpGet request = new HttpGet("http://localhost:8980/SOEN_REDO_war_exploded/artists");
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
-            System.out.println();
             System.out.println(result);
 
         }catch(IOException e){

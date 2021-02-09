@@ -35,6 +35,7 @@ public class ArtistsManager {
             return null;
         if(!hasArtists())
             populate();
+
         return artists;
     }
 
@@ -59,10 +60,25 @@ public class ArtistsManager {
         Iterator<Artist> itr = artists.iterator();
         while(itr.hasNext()) {
             albumsString.append(itr.next().toString()).append("\n");
+//            albumsString.append("Nickname: " + itr.next().getNickname() + ", Full Name: " + itr.next().getFirst_name() + ", " + itr.next().getLast_name()).append("\n");
+//            albumsString.append(itr.next().getNickname().toString()).append("\n");
         }
         return albumsString.toString();
         //return artists.stream().map(Objects::toString).collect(Collectors.joining("\n"));
     }
+
+    public String getAllArtistsByNickname() {
+        StringBuilder albumsString= new StringBuilder();
+        artists.stream()
+                .forEach(ar -> {
+                    albumsString.append("Nickname: " + ar.getNickname() + ", Full Name: " +  ar.getFirst_name() +", " + ar.getLast_name() + "\n");
+                });
+
+
+        return albumsString.toString();
+    }
+
+
 
     public boolean hasArtists(){
         return !artists.isEmpty();

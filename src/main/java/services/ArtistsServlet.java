@@ -44,7 +44,7 @@ public class ArtistsServlet extends HttpServlet {
             Artist newArtist = artistsManager.createArtist(nickname, first_name, last_name, biography);
 
             if(newArtist != null){
-                message = "Artist created TEST: \n" + newArtist + "\n";
+                message = "Artist created TESTing: \n" + newArtist + "\n";
                 status = HttpServletResponse.SC_CREATED;
             }
             else{
@@ -62,12 +62,12 @@ public class ArtistsServlet extends HttpServlet {
 
         if(nickname == null || nickname.isEmpty()) {
             CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
-            message = artists.isEmpty() ? "There are no artists to display\n"
-                    : ("Artists:\n" + artistsManager.getAllArtists() + "\n");
-            status = HttpServletResponse.SC_OK;
-        }
 
-        else{
+            message = artists.isEmpty() ? "There are no artists to display\n"
+                    : ("Artists test:\n" + artistsManager.getAllArtistsByNickname() + "\n");
+
+            status = HttpServletResponse.SC_OK;
+        }else{
             Artist artist = artistsManager.getArtist(nickname);
             if(artist != null){
                 message = artist + "\n";
