@@ -15,10 +15,12 @@ public class ArtistsClient {
     //from the get method, shows all the artists
     public void showAll(){
         try(CloseableHttpClient client = HttpClients.createDefault()){
+            System.out.println("Show all artists here");
+//            HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists");
             HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists");
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
-            System.out.println();
+            System.out.println("got result: printing: ");
             System.out.println(result);
 
         }catch(IOException e){

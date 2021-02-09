@@ -41,14 +41,11 @@ public class ArtistsServlet extends HttpServlet {
 
             //
 //            response.setStatus(status);
-            PrintWriter out = response.getWriter();
-            out.println("message");
-            out.flush();
-            out.close();
-
-
+//            PrintWriter out = response.getWriter();
+//            out.println("message");
+//            out.flush();
+//            out.close();
         }
-
         else{
             Artist newArtist = artistsManager.createArtist(nickname, first_name, last_name, biography);
 
@@ -72,7 +69,7 @@ public class ArtistsServlet extends HttpServlet {
         if(nickname == null || nickname.isEmpty()) {
             CopyOnWriteArrayList<Artist> artists = artistsManager.getList();
             message = artists.isEmpty() ? "There are no artists to display\n"
-                    : ("Artists:\n" + artistsManager.getAllArtists() + "\n");
+                    : ("Artists testing:\n"  + "\n");
             status = HttpServletResponse.SC_OK;
         }
 
@@ -186,19 +183,20 @@ public class ArtistsServlet extends HttpServlet {
             System.out.println("Error sending response");
         }
     }
-
-    private void sendResponse(HttpServletResponse response, int status){
-        try{
-            response.setStatus(status);
-            OutputStream out = response.getOutputStream();
-            out.write(message.getBytes());
-            out.write(Integer.parseInt("status"));
-            out.write(status);
-            out.flush();
-        }
-        catch (Exception e){
-            System.out.println("Error sending response");
-        }
-    }
+//
+//    private void sendResponse(HttpServletResponse response, int status){
+//        try{
+//            response.setStatus(status);
+//            OutputStream out = response.getOutputStream();
+//            out.write(message.getBytes());
+//            out.write(Integer.parseInt("status"));
+//            out.write(status);
+//            out.flush();
+//        }
+//        catch (Exception e){
+//            System.out.println("Error sending response");
+//        }
+//    }
 }
 //curl -v -d "nickname=&first_name=feb&last_name=francione&biography=he is a complete person" http://localhost:8980/demo_1_0_SNAPSHOT_war/artists
+//get all artists by nickname curl -v http://localhost:8980/demo_war/artists
