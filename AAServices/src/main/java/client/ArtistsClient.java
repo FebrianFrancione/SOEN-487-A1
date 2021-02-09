@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class ArtistsClient {
 
+    //from the get method, shows all the artists
     public void showAll(){
         try(CloseableHttpClient client = HttpClients.createDefault()){
             HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists");
@@ -44,6 +45,7 @@ public class ArtistsClient {
             String result = client.execute(request, responseHandler);
             System.out.println();
             System.out.println(result);
+            System.out.println("Successfully posted artist");
         }catch(IOException e){
             e.printStackTrace();
         }

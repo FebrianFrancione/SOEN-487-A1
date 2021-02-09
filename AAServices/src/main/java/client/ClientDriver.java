@@ -292,9 +292,11 @@ public class ClientDriver {
                 last_name = URLEncoder.encode(last_name);
                 biography = URLEncoder.encode(biography);
                 artistClient.sendArtist(nickname, first_name, last_name, biography);
+                System.out.println("add!!@");
             }
             else if(update)
                 artistClient.updateArtist(nickname, first_name, last_name, biography);
+            System.out.println("update!!@2");
 
 
         }catch(InputMismatchException e){
