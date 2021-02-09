@@ -9,7 +9,7 @@ import java.net.URLDecoder;
 
 @Path("/album")
 public class AlbumRest {
-    String message = "";
+    private String message = "";
     private static AlbumsManager albumsManager = new AlbumsManager();
 
     @GET
@@ -44,7 +44,7 @@ public class AlbumRest {
     }
 
     @POST
-    @Produces({MediaType.TEXT_PLAIN})
+    @Produces(MediaType.TEXT_PLAIN)
     @Path("/create/{ISRC}/{title}/{description}/{year}/{artist}")
     public Response createAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
         title = URLDecoder.decode(title);
@@ -62,6 +62,19 @@ public class AlbumRest {
         }
 
     }
+
+//    @POST
+//    @Produces(MediaType.TEXT_PLAIN)
+//    @Path("/create/{ISRC}/{title}/{description}/{year}/{artist}")
+//    public String createAlbum(@PathParam("ISRC") String ISRC, @PathParam("title") String title, @PathParam("description") String description, @PathParam("year") int year, @PathParam("artist") String artist){
+//            Album album = albumsManager.createAlbum(ISRC, title, description, year, artist);
+//
+////            message = (album != null) ? "Album created!: \n" + album : " This ISRC already exists, please use a unique ISRC";
+////            return Response.ok(message).build();
+//        return "ok" + album.toString();
+//    }
+
+
 
     @DELETE
     @Produces({MediaType.TEXT_PLAIN})

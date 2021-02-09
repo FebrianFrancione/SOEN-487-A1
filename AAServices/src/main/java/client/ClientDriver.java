@@ -1,5 +1,7 @@
 package client;
 
+import services.ArtistsServlet;
+
 import java.net.URLEncoder;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,8 +11,10 @@ public class ClientDriver {
     public static AlbumClient albumClient;
     public static ArtistsClient artistClient;
 
+
     public static void main(String[] args){
         albumClient = new AlbumClient();
+//        artistServlet = new ArtistsServlet();
         artistClient = new ArtistsClient();
         printMainMenu();
     }
@@ -20,31 +24,32 @@ public class ClientDriver {
         int choose=0;
         boolean correct = true;
 
-        System.out.println("\nMenu : ");
-        System.out.println("1. Album");
-        System.out.println("2. Artist");
-        System.out.println("3. Quit");
-        System.out.println();
+        System.out.println("\nWelcome to the Artists and Albums Service!");
+        System.out.println("1. Artist Service");
+        System.out.println("2. Album Service");
+        System.out.println("3. Quit Console");
 
         do {
-            System.out.print("Please choose one of the above numbers : ");
+            System.out.print("Please select the service you would like to use: ");
             try {
                 choose = sc.nextInt();
-                System.out.println();
-
                 switch(choose){
                     case 1:
-                        albumsDriver();
+                        System.out.println("You have selected the Artist Service option!");
+                        artistsDriver();
+
                         break;
                     case 2:
-                        artistsDriver();
+                        System.out.println("You have selected the Album Service option!");
+                        albumsDriver();
+
                         break;
                     case 3:
-                        System.out.println("The program is terminated.");
+                        System.out.println("You have selected the Quit option. The program is terminating...");
                         System.exit(0);
                         break;
                     default:
-                        System.out.println("Please choose a number between 1 or 2.");
+                        System.out.println("Invalid input. Select again.");
                 }
 
             } catch (InputMismatchException e) {
@@ -52,14 +57,46 @@ public class ClientDriver {
                 System.out.println("Please put a correct number. Try again.");
             }
 
-            System.out.println();
-
             if(choose == 1 || choose == 2)
                 correct=false;
 
         }while(correct);
 
 
+    }
+
+    private static void artistsDriver(){
+        Scanner sc = new Scanner(System.in);
+        int choose;
+        do {
+            choose = ArtistsMenu(sc);
+
+            switch(choose){
+                case 1:
+                    displayArtists();
+                    break;
+                case 2:
+                    retrieveArtist(sc);
+                    break;
+                case 3:
+                    addOrUpdateArtist(true, false, sc);
+                    break;
+                case 4:
+                    addOrUpdateArtist(false, true, sc);
+                    break;
+                case 5:
+                    deleteArtist(sc);
+                    break;
+                case 6:
+                    System.out.println("Exiting artists driver.");
+                    break;
+                default:
+                    System.out.println("You chose an invalid option.");
+            }
+
+        }while(choose != 6);
+
+        printMainMenu();
     }
 
     private static void albumsDriver(){
@@ -86,45 +123,10 @@ public class ClientDriver {
                     deleteAlbum(sc);
                     break;
                 case 6:
-                    System.out.println("Exiting albums driver.\n");
+                    System.out.println("Exiting albums driver.");
                     break;
                 default:
-                    System.out.println("You chose the wrong number.\n");
-            }
-
-        }while(choose != 6);
-
-        printMainMenu();
-    }
-
-    private static void artistsDriver(){
-        Scanner sc = new Scanner(System.in);
-        int choose;
-
-        do {
-            choose = ArtistsMenu(sc);
-
-            switch(choose){
-                case 1:
-                    displayArtists();
-                    break;
-                case 2:
-                    retrieveArtist(sc);
-                    break;
-                case 3:
-                    addOrUpdateArtist(true, false, sc);
-                    break;
-                case 4:
-                    addOrUpdateArtist(false, true, sc);
-                    break;
-                case 5:
-                    deleteArtist(sc);
-                    break;
-                case 6:
-                    System.out.println("Exiting artists driver.\n");
-                    break;
-                default:
-                    System.out.println("You chose the wrong number.\n");
+                    System.out.println("You chose an invalid option.");
             }
 
         }while(choose != 6);
@@ -149,32 +151,30 @@ public class ClientDriver {
             return choose;
         }catch(InputMismatchException e){
             sc.nextLine();
-            System.out.println("Please put a number. Try again.");
-            System.out.println();
+            System.out.println("Please enter a number. Try again.");
             return 0;
         }
     }
 
     private static int ArtistsMenu(Scanner sc){
         System.out.println("\n\nMenu (Verb Lists) :");
-        System.out.println("1. Show the list of artists");
-        System.out.println("2. Return the specific artists info");
-        System.out.println("3. Add a new artist to the collection");
-        System.out.println("4. Update existing artist info");
-        System.out.println("5. Delete an existing artist");
+        System.out.println("1. List all Artists (nickname + full name)");
+        System.out.println("2. Get Artist details (returns the artist full info including bio)");
+        System.out.println("3. Add a new Artist to the collection");
+        System.out.println("4. Update existing Artist");
+        System.out.println("5. Delete an existing Artist");
         System.out.println("6. Return to main menu");
         System.out.println();
 
-        System.out.print("Please choose one of the above numbers : ");
+        System.out.print("Please select an option: ");
+
         try{
             int choose = sc.nextInt();
             sc.nextLine();
-            System.out.println();
             return choose;
         }catch(InputMismatchException e){
             sc.nextLine();
-            System.out.println("Please put a number. Try again.");
-            System.out.println();
+            System.out.println("Please enter a number. Try again.");
             return 0;
         }
     }
@@ -185,6 +185,7 @@ public class ClientDriver {
 
     private static void displayArtists(){
         artistClient.showAll();
+
     }
 
     private static void retrieveAlbum(Scanner sc){
@@ -219,7 +220,7 @@ public class ClientDriver {
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
 
-            artistClient.getArtist(nickname);
+//            artistClient.getArtist(nickname);
 
         }catch(InputMismatchException e){
             sc.nextLine();
@@ -286,21 +287,32 @@ public class ClientDriver {
             System.out.print("Biography: ");
             biography = sc.nextLine();
 
-            if(add){
+            System.out.println("add value: " + add);
+            System.out.println("update value: " + update);
+
+            if(add == true){
                 nickname = URLEncoder.encode(nickname);
                 first_name = URLEncoder.encode(first_name);
                 last_name = URLEncoder.encode(last_name);
                 biography = URLEncoder.encode(biography);
-                artistClient.sendArtist(nickname, first_name, last_name, biography);
+                if(nickname.isEmpty()){
+                    throw new InputMismatchException("Nickname Error! Nickname field cannot be left blank!");
+                }else if(first_name.isEmpty()){
+                    throw new InputMismatchException("First Name Error! First Name field cannot be left blank!");
+                }else if (last_name.isEmpty()){
+                    throw new InputMismatchException("Last Name Error! Last Name field cannot be left blank!");
+                }
+//                artistClient.sendArtist(nickname, first_name, last_name, biography);
+                System.out.println("addOrUpdateArtist: add");
+            } else if(update == true) {
+//                artistClient.updateArtist(nickname, first_name, last_name, biography);
+                System.out.println("addOrUpdateArtist: update");
             }
-            else if(update)
-                artistClient.updateArtist(nickname, first_name, last_name, biography);
-
 
         }catch(InputMismatchException e){
-            sc.nextLine();
-            System.out.println("You put the wrong information. Try again.");
-            System.out.println();
+//            sc.nextLine();
+            System.out.println("You put the wrong information: " + e.getMessage() + " Try again.");
+//            System.out.println();
         }
     }
 
@@ -328,7 +340,7 @@ public class ClientDriver {
             System.out.print("Nickname: ");
             nickname = sc.nextLine();
             nickname = URLEncoder.encode(nickname);
-            artistClient.deleteArtist(nickname);
+//            artistClient.deleteArtist(nickname);
 
         }catch(InputMismatchException e){
             sc.nextLine();
