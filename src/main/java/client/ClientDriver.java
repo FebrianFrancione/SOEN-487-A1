@@ -23,7 +23,7 @@ public class ClientDriver {
         int choose=0;
         boolean correct = true;
 
-        System.out.println("\nWelcome to the Artists and Albums Service!");
+        System.out.println("\nWelcome to the Artists and Albums Service!\n Created by Kiho, Ivan and Febrian");
         System.out.println("1. Artist Service");
         System.out.println("2. Album Service");
         System.out.println("3. Quit Console");
