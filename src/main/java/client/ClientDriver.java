@@ -135,7 +135,7 @@ public class ClientDriver {
 
     private static int AlbumsMenu(Scanner sc){
         System.out.println("\n\nMenu (Verb Lists) :");
-        System.out.println("1. Show the list of albums");
+        System.out.println("1. List all Albums (nickname + full name)");
         System.out.println("2. Return the specific album info");
         System.out.println("3. Add a new album to the collection");
         System.out.println("4. Update existing album info");
@@ -236,6 +236,7 @@ public class ClientDriver {
         String artist;
 
         System.out.println("Please enter the information of the album.");
+        System.out.println("(Must have a valid ISRC, Title, Year and Artist)");
         try {
             System.out.print("ISRC: ");
             ISRC = sc.next();
@@ -257,14 +258,27 @@ public class ClientDriver {
             artist = sc.nextLine();
             artist = URLEncoder.encode(artist);
 
-            if(add)
+            if(ISRC.isEmpty() || title.isEmpty() || artist.isEmpty()){
+                throw new InputMismatchException("A field is missing an input!");
+            }else if(year < 1950){
+                throw new InputMismatchException("The year must be greater than or equal to 1950!");
+            }
+            else if(add) {
+                if (description.isEmpty()) {
+                    description = null;
+                }
                 albumClient.addAlbum(ISRC, title, description, artist, year);
-            else if(update)
+            }
+            else if(update) {
+               if(description.isEmpty()){
+                    description = null;
+                }
                 albumClient.updateAlbum(ISRC, title, description, artist, year);
+            }
 
         }catch(InputMismatchException e){
             sc.nextLine();
-            System.out.println("You put the wrong information. Try again.");
+            System.out.println("You put the wrong information. " + e.getMessage() + " Try again.");
             System.out.println();
         }
     }

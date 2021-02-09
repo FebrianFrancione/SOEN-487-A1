@@ -51,13 +51,13 @@ public class AlbumRest {
         description = URLDecoder.decode(description);
         artist = URLDecoder.decode(artist);
 
-        if(ISRC == null || title == null || year == 0 || artist == null){
+        if(ISRC.isEmpty() || title.isEmpty() || year == 0 || artist.isEmpty()){
             message = "A Form parameter is incorrect!";
             return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
         }
         else{
             Album album = albumsManager.createAlbum(ISRC, title, description, year, artist);
-            message = (album != null) ? "Album created!: \n" + album : " This ISRC already exists, please use a unique ISRC";
+            message = (album != null) ? "New Album created!: \n" + album : " This ISRC already exists, please use a unique ISRC";
             return Response.ok(message).build();
         }
 
