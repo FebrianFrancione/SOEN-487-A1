@@ -16,7 +16,6 @@ public class ArtistsClient {
     public void showAll(){
         try(CloseableHttpClient client = HttpClients.createDefault()){
             System.out.println("Show all artists here");
-//            HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists");
             HttpGet request = new HttpGet("http://localhost:8980/demo_war/artists");
             ResponseHandler<String> responseHandler = readResponse();
             String result = client.execute(request, responseHandler);
