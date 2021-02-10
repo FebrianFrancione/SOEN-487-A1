@@ -135,7 +135,7 @@ public class ClientDriver {
 
     private static int AlbumsMenu(Scanner sc){
         System.out.println("\n\nMenu (Verb Lists) :");
-        System.out.println("1. List all Albums (nickname + full name)");
+        System.out.println("1. List all Albums");
         System.out.println("2. Return the specific album info");
         System.out.println("3. Add a new album to the collection");
         System.out.println("4. Update existing album info");

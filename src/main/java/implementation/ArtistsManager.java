@@ -15,7 +15,6 @@ public class ArtistsManager {
 
     public ArtistsManager() {
         artists = new CopyOnWriteArrayList<>();
-        populate();
     }
 
     public Artist createArtist(String nickname, String first_name, String last_name, String biography){
@@ -33,8 +32,6 @@ public class ArtistsManager {
     public CopyOnWriteArrayList<Artist> getList(){
         if(servletContext == null)
             return null;
-        if(!hasArtists())
-            populate();
 
         return artists;
     }
@@ -111,15 +108,4 @@ public class ArtistsManager {
         return false;
     }
 
-    private void populate() {
-        String[] nicknames = {"Ronaldo", "Tiger_Woods", "Rocky", "Iron_Man"};
-        String[] first_names = {"Ronaldo Luis", "Eldrick", "Rocco", "Anthony Edward"};
-        String[] last_names = {"Nazario de Lima", "Tont Woods", "Francis Marchegiano", "Stark"};
-        String[] bios = {"Brazilian soccer player", "American professional golfer", "American professional boxer",
-                "fictional super hero"};
-
-        for (int i = 0; i < nicknames.length; i++) {
-            createArtist(nicknames[i], first_names[i], last_names[i], bios[i]);
-        }
-    }
 }
