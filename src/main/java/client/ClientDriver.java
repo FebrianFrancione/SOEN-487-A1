@@ -204,7 +204,6 @@ public class ClientDriver {
             albumClient.getAlbums(ISRC, title);
 
         }catch(InputMismatchException e){
-            sc.nextLine();
             System.out.println("You put the wrong information. Try again.");
             System.out.println();
         }
@@ -222,7 +221,6 @@ public class ClientDriver {
             artistClient.getArtist(nickname);
 
         }catch(InputMismatchException e){
-            sc.nextLine();
             System.out.println("You put the wrong information. Try again.");
             System.out.println();
         }
@@ -277,7 +275,6 @@ public class ClientDriver {
             }
 
         }catch(InputMismatchException e){
-            sc.nextLine();
             System.out.println("You put the wrong information. " + e.getMessage() + " Try again.");
             System.out.println();
         }
@@ -319,9 +316,7 @@ public class ClientDriver {
             }
 
         }catch(InputMismatchException e){
-//            sc.nextLine();
             System.out.println("You put the wrong information: " + e.getMessage() + " Try again.");
-//            System.out.println();
         }
     }
 
@@ -335,7 +330,6 @@ public class ClientDriver {
             albumClient.deleteAlbum(ISRC);
 
         }catch(InputMismatchException e){
-            sc.nextLine();
             System.out.println("You put the wrong information. Try again.");
             System.out.println();
         }
@@ -352,7 +346,6 @@ public class ClientDriver {
             artistClient.deleteArtist(nickname);
 
         }catch(InputMismatchException e){
-            sc.nextLine();
             System.out.println("You put the wrong information. Try again.");
             System.out.println();
         }
