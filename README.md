@@ -1,6 +1,6 @@
 <h1>SOEN-487-A1</h1>
 
-Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>, <i>Kiho Lee 40073402</i>
+Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>, <i>Kiho Lee 40073402 (Team Leader)</i>
 
 <h2>Album Requests:<h2>
   <p>Port running on 8080 - separated form the servlet's 8980</p>
@@ -23,9 +23,6 @@ Created by: <i>Ivan Gerasymenko 27006284</i>, <i>Febrian Francione 40049253</i>,
   <li>DELETE: curl -v -X DELETE http://localhost:8080/core/album/{ISRC}</li>
   <li>PUT: curl -v -X PUT http://localhost:8080/core/album/{ISRC}/{title}/{Descritpion}/{year}/{artist} - where ISRC is the required ID needed to find and modify the album</li>
 </ul>
-
-
-
 
 <h2>Artist Requests:<h2>
  <p>Please run the Tomcat servlet with a different port than you use the Jersey services.</p>
